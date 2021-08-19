@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from sitio.views import CrearUsuario, Logear
+from sitio import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('/', admin.site.urls), # HOMEPAGE
-    path('Login/', Logear, name="Login"),    
-    path('CreateUser/', CrearUsuario),
+    path('login/', views.Logear, name="Login"),    
+    path('createuser/', views.CrearUsuario),
 ]
+
