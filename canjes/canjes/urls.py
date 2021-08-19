@@ -19,8 +19,8 @@ from sitio import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/', admin.site.urls), # HOMEPAGE
-    path('login/', views.Logear, name="Login"),    
-    path('createuser/', views.CrearUsuario),
+    path('login/', views.logear, name="Login"),    
+    path('createuser/', views.crear_usuario),
+    path('', views.home), # HOMEPAGE
 ]
 

@@ -8,7 +8,7 @@ from sitio.forms import FormCreateUser, FormLogin
 
 #----------------------------------------------------------------
 #Falta el is valid y guardar datos en la BDD
-def Logear(request):
+def logear(request):
 
     if request.method == 'POST':
 
@@ -25,7 +25,7 @@ def Logear(request):
 
 #Guardar en la BDD
 
-def CrearUsuario(request):
+def crear_usuario(request):
 
     if request.method == "POST":
 
@@ -43,5 +43,10 @@ def CrearUsuario(request):
         form = FormCreateUser()
     
     return render(request, 'CrearUsuario.html', {'form': form})
+
+#----------------------------------------------------------------
+
+def home(request):
+    return render(request, 'Home.html')
 
 #----------------------------------------------------------------
