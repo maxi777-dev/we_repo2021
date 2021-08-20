@@ -23,6 +23,7 @@ def crear_usuario(request):
         form = FormCreateUser(request.POST)        
         if form.is_valid():            
             form.cleaned_data['nombre']
+            form.cleaned_data['contraseña2']
             return redirect("login")    
     else:
         form = FormCreateUser()    

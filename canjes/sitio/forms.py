@@ -18,11 +18,20 @@ class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un u
     contraseña2 = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Repetir Contraseña'}))
 
     def clean_nombre(self): #Controla que no se ingrtesen malas palabras
-        #puteadas = ['maldito', 'puto', 'idiota', 'imbecil']
+        malas_palabras = ['maldito', 'puto', 'idiota', 'imbecil']
         texto_ingresado =self.cleaned_data['nombre']
-        if "puto" in texto_ingresado:
-            raise ValidationError("No se puede ingresar malas palabras")
+        for i in malas_palabras:
+            if texto_ingresado in malas_palabras:
+                raise ValidationError("No se puede ingresar malas palabras")
+            break
         return texto_ingresado
+
+    def clean_contraseña2(self):
+        pass1 = self.cleaned_data['contraseña']
+        pass2 = self.cleaned_data['contraseña2']
+        if pass1 != pass2:
+            raise forms.ValidationError ('Las contraseñas NO se repiten')
+        return pass2
 
 class FormLogin(forms.Form):
     usuario = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'placeholder':'Usuario'}))
