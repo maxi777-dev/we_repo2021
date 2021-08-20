@@ -10,6 +10,7 @@ body{
       position: absolute;
       top: 50%;
       left: 50%;
+      margin: 5em auto 7em;
       transform: translate(-50%, -50%);
       background: #191919;
       text-align: center;
@@ -18,8 +19,6 @@ body{
       color: white;
       text-transform: uppercase;
       font-weight: 500;
-      margin-inline-end: 200px auto;
-      margin-top: 200px;
       text-align: center;
     }
     .box input[type = "text"], .box input[type = "date"], .box input[type = "password"], .box input[type = "email"]{

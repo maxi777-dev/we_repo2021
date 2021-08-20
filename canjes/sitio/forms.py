@@ -5,7 +5,7 @@ from django.forms.fields import DateField, DateTimeField
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.widgets import Widget
 
-class FormCreateUser(forms.Form):
+class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un usuario nuevo
     nombre = forms.CharField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'Nombre'}))
     apellido = forms.CharField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'Apellido'}))
     usuario = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'placeholder':'Nombre de Usuario'}))
@@ -17,7 +17,7 @@ class FormCreateUser(forms.Form):
     contraseña = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Nueva Contraseña'}))
     contraseña2 = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Repetir Contraseña'}))
 
-    def clean_texto(self):
+    def clean_nombre(self): #Controla que no se ingrtesen malas palabras
         #puteadas = ['maldito', 'puto', 'idiota', 'imbecil']
         texto_ingresado =self.cleaned_data['nombre']
         if "puto" in texto_ingresado:
