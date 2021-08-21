@@ -18,7 +18,7 @@ class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un u
     password_checks = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Repetir Contraseña'}))
 
     def clean_name(self): #Controla que no se ingrtesen malas palabras
-        malas_palabras = ['maldito', 'puto', 'idiota', 'imbecil']
+        malas_palabras = ['maldito', 'maldita', 'puto', 'puta', 'idiota', 'imbecil', 'nazi', 'pelotudo', 'pelotuda', 'boludo', 'boluda']
         texto_ingresado = self.cleaned_data['name']
         for i in malas_palabras:
             if texto_ingresado in malas_palabras:
@@ -26,7 +26,7 @@ class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un u
             break
         return texto_ingresado
 
-    def clean_password_checks(self):
+    def clean_password_checks(self): #Controla que las 2 contraseñas coinsidan
         pass1 = self.cleaned_data['password']
         pass2 = self.cleaned_data['password_checks']
         if pass1 != pass2:
