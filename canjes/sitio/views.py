@@ -5,6 +5,7 @@ from django.template import Template, Context
 from django.shortcuts import render, redirect
 from sitio.forms import FormCreateUser, FormLogin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate
 
 def home(request):
     return render(request, 'home.html')
@@ -13,6 +14,7 @@ def home(request):
 def logear(request):
     if request.method == 'POST':
         form = FormLogin(request.POST)
+        authenticate(form.username, form.password) #Autentica al usuario, me falta agregar algo aca
     else:
         form = FormLogin()
     return render(request,"login.html", {'form': form})        
@@ -31,5 +33,5 @@ def crear_usuario(request):
 
 
 @login_required(login_url='login')
-def mis_canjes(request):  
+def mis_canjes(request):
     return render(request, 'mis_canjes.html')
