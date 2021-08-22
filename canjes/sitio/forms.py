@@ -33,6 +33,6 @@ class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un u
             raise forms.ValidationError('La contraseña no coincide')
         return pass2
 
-class FormLogin(forms.Form):
+class FormLogin(forms.Form): #Lista de datos para logear
     username = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'placeholder':'Usuario'}))
     password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Contraseña'}))

@@ -27,7 +27,7 @@ def crear_usuario(request): #Registro de nuevo usuario
     if request.method == "POST":
         form = FormCreateUser(request.POST)        
         if form.is_valid():    
-            #form.save()         no se porque pero en un video lo pone para guardar los datos pero aca me tira que no existe
+            #form.save()        no se porque pero en un video lo pone para guardar los datos pero aca me tira que no existe
             form.cleaned_data['name']
             form.cleaned_data['password_checks']
             return redirect("login")    

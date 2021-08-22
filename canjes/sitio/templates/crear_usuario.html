@@ -6,21 +6,27 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
   </head>
   <body>
-    <form class="box" action="." method= "POST">
-      {% csrf_token %}
-      <h1>CREAR CUENTA NUEVA</h1>
-      
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-success" role="alert"> 
-            {{message}}
-          </div>
-        {% endfor %}
-      {% endif %}
-
-      {{form.as_p}}
-
-      <input type="submit" name="" value="Crear Cuenta">
-    </form>
+    <nev class="box">
+      <form action="." method= "POST">
+        {% csrf_token %}
+        <h1>CREAR CUENTA NUEVA</h1>
+        
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-success" role="alert"> 
+              {{message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+  
+        {{form.as_p}}
+  
+        <input type="submit" name="" value="Crear Cuenta">
+      </form>
+      <form method= "GET">
+        <a style="color: #3498db;" href="{% url 'homepage' %}">Cancelar</a>
+      </form>
+    </nev>
+    
   </body>
 </html>
