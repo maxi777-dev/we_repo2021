@@ -5,7 +5,7 @@ from django.http import HttpResponse, request
 import datetime
 from django.template import Template, Context, context
 from django.shortcuts import render, redirect
-from sitio.forms import FormCreateUser, FormLogin
+from sitio.forms import FormCreateUser, FormLogin, FormRecuperarContraseña
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.core.mail import EmailMessage
@@ -81,7 +81,11 @@ def contact(request): #Esto envia un mail al correo para verificar
         email.send()
         messages.success(request, 'Se a enviado un correo de verificacion')
 
-
+def recuperarcontraseña(request): #Esto se usa para recuperar la contraseña
+    if request.method == "POST":
+        form = FormRecuperarContraseña(request.POST)
+        return redirect("login")
+    return render(request,"recuperarcontraseña.html") 
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def mis_canjes(request):

@@ -9,7 +9,7 @@ class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un u
     name = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Nombre'}))
     lastname = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Apellido'}))
     email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
-    location = forms.CharField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'Direccion'}))
+    location = forms.CharField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'Localidad'}))
     cp = forms.CharField(label="", max_length=4, widget=forms.TextInput(attrs={'placeholder':'Codigo Postal'}))
     fecha_nacimiento = forms.DateField(label="", widget=forms.DateInput(attrs={'type':'date'}))
     cuil_cuit = forms.CharField(label="", max_length=10, widget=forms.TextInput(attrs={'placeholder':'CUIT/CUIL'}))
@@ -67,3 +67,8 @@ class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un u
 class FormLogin(forms.Form): #Lista de datos para logear
     username = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'placeholder':'Usuario'}))
     password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Contraseña'}))
+
+class FormRecuperarContraseña(forms.Form): #Lista de datos pararecuperar contraseña
+    email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
+    password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Nueva Contraseña'}))
+    password_checks = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Repetir Contraseña'}))

@@ -22,6 +22,7 @@ urlpatterns = [
     path('login/', views.logear, name="login"),    
     path('createuser/', views.crear_usuario, name='register'),
     path('canjes/', views.mis_canjes, name='mis_canjes'),
+    path('recuperarcontraseña/', views.recuperarcontraseña, name='recuperarcontraseña'),
     #path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='homepage'), # HOMEPAGE
 ]
