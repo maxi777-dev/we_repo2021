@@ -32,12 +32,14 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    name = models.CharField(max_length = 40, null = True)
-    lastname = models.CharField(max_length = 40, null = True)
-    location = models.CharField(max_length = 40, null = True)
-    cp = models.IntegerField(max_length = 40, null = True)
-    fecha_nacimiento = models.DateField(max_length = 40, null = True)
-    cuil_cuit = models.CharField(max_length = 40, null = True)
+    name = models.CharField(max_length = 40, null = False, blank=False)
+    lastname = models.CharField(max_length = 40, null = False, blank=False)
+    location = models.CharField(max_length = 1250, null = True, blank=True)
+    cp = models.CharField(max_length = 4, null = True, blank=True)
+    birthdate = models.DateField(null=True, blank=True)
+    cuil_cuit = models.CharField(max_length = 10, null = True, blank=True)
+    mail = models.EmailField()
+    password = models.CharField(max_length = 40, null = False, blank=False)
 
     def __str__(self):
         return self.nombre + ' ' + self.apellido

@@ -1,3 +1,4 @@
+from sitio.models import Profile
 from django import template
 from django.forms.forms import Form
 from django.http import HttpResponse, request
@@ -26,10 +27,23 @@ def logear(request): #Logeo de usuarios ya creados
 def crear_usuario(request): #Registro de nuevo usuario
     if request.method == "POST":
         form = FormCreateUser(request.POST)        
-        if form.is_valid():    
-            #form.save()        no se porque pero en un video lo pone para guardar los datos pero aca me tira que no existe
+        if form.is_valid(): 
             form.cleaned_data['name']
+            form.cleaned_data['lastname']
+            form.cleaned_data['location']
+            form.cleaned_data['cp']
+            form.cleaned_data['cuil_cuit']
             form.cleaned_data['password_checks']
+            nuevo = Profile()
+            nuevo.name = request.POST['name']
+            nuevo.lastname = request.POST['lastname']
+            nuevo.birthdate = request.POST['fecha_nacimiento']
+            nuevo.password = request.POST['password']
+            nuevo.cp = request.POST['cp']
+            nuevo.cuil_cuit = request.POST['cuil_cuit']
+            nuevo.mail = request.POST['email']
+            nuevo.location = request.POST['location']
+            nuevo.save()
             return redirect("login")    
     else:
         form = FormCreateUser()    
