@@ -3,7 +3,7 @@ from django import template
 from django.forms.forms import Form
 from django.http import HttpResponse, request
 import datetime
-from django.template import Template, Context
+from django.template import Template, Context, context
 from django.shortcuts import render, redirect
 from sitio.forms import FormCreateUser, FormLogin
 from django.contrib.auth.decorators import login_required
@@ -25,29 +25,41 @@ def logear(request): #Logeo de usuarios ya creados
     return render(request,"login.html", {'form': form})        
 
 def crear_usuario(request): #Registro de nuevo usuario
+    mensajes = []
     if request.method == "POST":
         form = FormCreateUser(request.POST)        
-        if form.is_valid(): 
-            form.cleaned_data['name']
-            form.cleaned_data['lastname']
-            form.cleaned_data['location']
-            form.cleaned_data['cp']
-            form.cleaned_data['cuil_cuit']
-            form.cleaned_data['password_checks']
-            nuevo = Profile()
-            nuevo.name = request.POST['name']
-            nuevo.lastname = request.POST['lastname']
-            nuevo.birthdate = request.POST['fecha_nacimiento']
-            nuevo.password = request.POST['password']
-            nuevo.cp = request.POST['cp']
-            nuevo.cuil_cuit = request.POST['cuil_cuit']
-            nuevo.mail = request.POST['email']
-            nuevo.location = request.POST['location']
-            nuevo.save()
-            return redirect("login")    
+        if form.is_valid():
+            validar_mail = request.POST['email']
+            lista_usuarios = Profile.objects.all() #Se trae todos los usuarios que haya para validar mail existente
+            email_valido = True
+            for u in lista_usuarios:
+                if u.mail == validar_mail:
+                    email_valido = False
+                    break
+            if email_valido:
+                form.cleaned_data['name']
+                form.cleaned_data['lastname']
+                form.cleaned_data['location']
+                form.cleaned_data['cp']
+                form.cleaned_data['cuil_cuit']
+                form.cleaned_data['password_checks']
+                nuevo = Profile()
+                nuevo.name = request.POST['name']
+                nuevo.lastname = request.POST['lastname']
+                nuevo.birthdate = request.POST['fecha_nacimiento']
+                nuevo.password = request.POST['password']
+                nuevo.cp = request.POST['cp']
+                nuevo.cuil_cuit = request.POST['cuil_cuit']
+                nuevo.mail = request.POST['email']
+                nuevo.location = request.POST['location']
+                #nuevo.save()
+                return redirect("login")
+            else:
+                mensajes.append('El mail ingresado ya existe')    
     else:
-        form = FormCreateUser()    
-    return render(request, 'crear_usuario.html', {'form': form})
+        form = FormCreateUser()
+    context = {'form': form, 'messages': mensajes}   
+    return render(request, 'crear_usuario.html', context)
 
 def contact(request): #Esto envia un mail al correo para verificar
     if request.method == "POST":

@@ -31,7 +31,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    user = models.OneToOneField(User, null = True, default = None, on_delete = models.CASCADE)
     name = models.CharField(max_length = 40, null = False, blank=False)
     lastname = models.CharField(max_length = 40, null = False, blank=False)
     location = models.CharField(max_length = 1250, null = True, blank=True)
