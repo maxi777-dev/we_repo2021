@@ -65,7 +65,7 @@ class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un u
         return pass2
 
 class FormLogin(forms.Form): #Lista de datos para logear
-    username = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'placeholder':'Usuario'}))
+    email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
     password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Contraseña'}))
 
 class FormRecuperarContraseña(forms.Form): #Lista de datos pararecuperar contraseña

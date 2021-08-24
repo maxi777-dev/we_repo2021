@@ -17,9 +17,21 @@ def home(request): #Pagina principal
     return render(request, 'home.html')
 
 def logear(request): #Logeo de usuarios ya creados
-    if request.method == 'POST':
-        form = FormLogin(request.POST)
-        authenticate(form.username, form.password) #Autentica al usuario, me falta agregar algo aca
+    mensajes = []
+    if request.method == "POST":
+        form = FormLogin(request.POST)        
+        validar_mail = request.POST['email']
+        lista_usuarios = Profile.objects.all() #Se trae todos los usuarios que haya para validar mail existente
+        email_valido = True
+        for u in lista_usuarios:
+            if u.mail == validar_mail:
+                email_valido = False
+                break
+        if email_valido:
+            return redirect("mis_canjes")
+        else:
+            mensajes.append('El Usuario no existe')  
+        #authenticate(form.email, form.password) #Autentica al usuario, me falta agregar algo aca
     else:
         form = FormLogin()
     return render(request,"login.html", {'form': form})        
@@ -52,7 +64,7 @@ def crear_usuario(request): #Registro de nuevo usuario
                 nuevo.cuil_cuit = request.POST['cuil_cuit']
                 nuevo.mail = request.POST['email']
                 nuevo.location = request.POST['location']
-                #nuevo.save()
+                nuevo.save()
                 return redirect("login")
             else:
                 mensajes.append('El mail ingresado ya existe')    
