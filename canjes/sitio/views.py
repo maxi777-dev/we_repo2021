@@ -1,3 +1,4 @@
+from django.contrib import auth
 from sitio.models import Profile
 from django import template
 from django.forms.forms import Form
@@ -6,6 +7,7 @@ import datetime
 from django.template import Template, Context, context
 from django.shortcuts import render, redirect
 from sitio.forms import FormCreateUser, FormLogin, FormRecuperarContraseña
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.core.mail import EmailMessage
@@ -16,56 +18,69 @@ from django.contrib import messages
 def home(request): #Pagina principal
     return render(request, 'home.html')
 
+
 def logear(request): #Logeo de usuarios ya creados
+    form = FormLogin()
+    no_activo = False
     mensajes = []
     if request.method == "POST":
-        form = FormLogin(request.POST)        
-        validar_mail = request.POST['email']
-        lista_usuarios = Profile.objects.all() #Se trae todos los usuarios que haya para validar mail existente
-        email_valido = True
-        for u in lista_usuarios:
-            if u.mail == validar_mail:
-                email_valido = False
-                break
-        if email_valido:
-            return redirect("mis_canjes")
+        form = FormLogin(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    auth.login(request, user)
+                    next = request.POST.get('next')
+                    if next:
+                        return redirect(request.POST.get('next'))
+                    return redirect('homepage')
         else:
-            mensajes.append('El Usuario no existe')  
-        #authenticate(form.email, form.password) #Autentica al usuario, me falta agregar algo aca
-    else:
-        form = FormLogin()
-    return render(request,"login.html", {'form': form})        
+            username = form.cleaned_data['username']     
+            usuarios_comunes = User.objects.all()
+            usuario_encontrado = False
+            for usr in usuarios_comunes:
+                if (usr.username == username): 
+                    usuario_encontrado = True
+                    break
+            if (usuario_encontrado):
+                if (not usr.is_active):
+                    mensajes.append('El usuario no está activo, verifique su email')
+                else:
+                    mensajes.append('La contraseña ingresada es incorrecta') 
+            else:
+                msj = 'El usuario "' + username + '" no existe'
+                mensajes.append(msj)        
+
+    return render(request, "login.html", {'form': form})
 
 def crear_usuario(request): #Registro de nuevo usuario
     mensajes = []
     if request.method == "POST":
-        form = FormCreateUser(request.POST)        
+        form = FormCreateUser(data=request.POST)        
         if form.is_valid():
             validar_mail = request.POST['email']
-            lista_usuarios = Profile.objects.all() #Se trae todos los usuarios que haya para validar mail existente
+            lista_usuarios = User.objects.all() #Se trae todos los usuarios que haya para validar mail existente
             email_valido = True
             for u in lista_usuarios:
-                if u.mail == validar_mail:
+                if u.email == validar_mail:
                     email_valido = False
                     break
-            if email_valido:
-                form.cleaned_data['name']
-                form.cleaned_data['lastname']
-                form.cleaned_data['location']
-                form.cleaned_data['cp']
-                form.cleaned_data['cuil_cuit']
-                form.cleaned_data['password_checks']
-                nuevo = Profile()
-                nuevo.name = request.POST['name']
-                nuevo.lastname = request.POST['lastname']
-                nuevo.birthdate = request.POST['fecha_nacimiento']
-                nuevo.password = request.POST['password']
-                nuevo.cp = request.POST['cp']
-                nuevo.cuil_cuit = request.POST['cuil_cuit']
-                nuevo.mail = request.POST['email']
-                nuevo.location = request.POST['location']
-                nuevo.save()
-                return redirect("login")
+            if email_valido:          
+                user = form.save()
+                user.is_active = True # Then return it to False
+                grupo = Group.objects.get(name = 'comun')
+                user.groups.add(grupo)
+                Profile.objects.create(
+                    user = user
+                )
+
+                user.save()
+
+                return redirect('login')
             else:
                 mensajes.append('El mail ingresado ya existe')    
     else:

@@ -1,11 +1,15 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+
 """from django.forms import models
 from django.forms.fields import DateField, DateTimeField
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.widgets import Widget"""
 
-class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un usuario nuevo
+"""class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un usuario nuevo
     name = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Nombre'}))
     lastname = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Apellido'}))
     email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
@@ -62,12 +66,21 @@ class FormCreateUser(forms.Form): #Lista de datos que se necesitan al crear un u
         pass2 = self.cleaned_data['password_checks']
         if pass1 != pass2:
             raise forms.ValidationError('La contraseña no coincide')
-        return pass2
+        return pass2"""
 
-class FormLogin(forms.Form): #Lista de datos para logear
+class FormCreateUser(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
+
+class FormLogin(AuthenticationForm):
+    def confirm_login_allowed(self, user): # Bypass login without is_active() 
+        pass
+
+"""class FormLogin(forms.Form): #Lista de datos para logear
     email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
     password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Contraseña'}))
-
+"""
 class FormRecuperarContraseña(forms.Form): #Lista de datos pararecuperar contraseña
     email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
     password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Nueva Contraseña'}))
