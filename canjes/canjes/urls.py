@@ -19,11 +19,13 @@ from sitio import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', views.logear, name="login"),    
+    path('login/', views.logear, name="login"), 
+    path('logout/', views.logout, name="logout"),    
     path('createuser/', views.crear_usuario, name='register'),
     path('canjes/', views.mis_canjes, name='mis_canjes'),
     path('recuperarcontraseña/', views.recuperarcontraseña, name='recuperarcontraseña'),
     #path('accounts/', include('django.contrib.auth.urls')),
-    path('', views.home, name='homepage'), # HOMEPAGE
+    path('', views.home, name='homepage'), # HOMEPAGE,
+    path('activate/<uidb64>/<token>', views.verificationview.as_view(), name="activate"),
 ]
 

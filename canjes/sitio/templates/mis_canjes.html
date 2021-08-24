@@ -39,24 +39,17 @@
 
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Mis canjes</a></li>
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'register' %}">Registrate</a></li>
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">24x7 Support <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"><strong>Call: </strong>+09-456-567-890</a></li>
-                            <li><a href="#"><strong>Mail: </strong>info@yourdomain.com</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#"><strong>Address: </strong>
-                                <div>
-                                    234, New york Street,<br />
-                                    Just Location, USA
-                                </div>
-                            </a></li>
-                        </ul>
-                    </li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'mis_canjes' %}">Mis canjes</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                        <li><a href="{% url 'register' %}">{{user}}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'register' %}">Registrate</a></li>
+                        <li><a href="{% url 'register' %}">{{user}}</a></li>
+                    {% endif %}
+
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
