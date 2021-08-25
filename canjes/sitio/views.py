@@ -21,7 +21,6 @@ from .tokenizer import token_generator
 def home(request): #Pagina principal
     return render(request, 'home.html')
 
-
 def logear(request): #Logeo de usuarios ya creados
     if not request.user.is_authenticated: # Check if its ok
         form = FormLogin()
@@ -111,26 +110,6 @@ def crear_usuario(request): #Registro de nuevo usuario
         return render(request, 'crear_usuario.html', context)
     else:
         return redirect('homepage')
-
-def contact(request): #Esto envia un mail al correo para verificar
-    if request.method == "POST":
-        name = request.POST['name']
-        email = request.POST['email']
-        subject = request.POST['subject']
-        message = request.POST['message']
-
-        template = render_to_string('email_template.html', {
-            'name': name,
-            'email': email,
-            'message': message})
-        email =EmailMessage(
-            subject,
-            template,
-            settings.EMAIL_HOST_USER,
-            email)
-        email.fail_silently = False
-        email.send()
-        messages.success(request, 'Se a enviado un correo de verificacion')
 
 def recuperarcontraseña(request): #Esto se usa para recuperar la contraseña
     if request.method == "POST":
