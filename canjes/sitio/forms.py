@@ -69,13 +69,43 @@ from django.forms.widgets import Widget"""
         return pass2"""
 
 class FormCreateUser(UserCreationForm):
+    name = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Nombre'}))
+    lastname = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Apellido'}))
+    email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
+    username = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Nombre de Usuario'}))
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
+        fields = ['name', 'lastname', 'email', 'username','password1', 'password2']
+        help_texts = {
+            'name': None,
+            'lastname': None,
+            'email': None,
+            'username': None,
+        }
+    
+    def __init__(self,*args,**kwargs):
+        super(FormCreateUser, self).__init__(*args, **kwargs)
+
+        self.fields['password1'].widget.attrs['placeholder'] = "Contraseña"
+        self.fields['password1'].label = ''      
+        self.fields['password1'].help_text = ''        
+
+        self.fields['password2'].widget.attrs['placeholder'] = "Confirmar contraseña"
+        self.fields['password2'].label = ''
+        self.fields['password2'].help_text = ''
 
 class FormLogin(AuthenticationForm):
     def confirm_login_allowed(self, user): # Bypass login without is_active() 
         pass
+
+    def __init__(self,*args,**kwargs):
+        super(FormLogin, self).__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs['placeholder'] = "Usuario"
+        self.fields['username'].label = ''
+
+        self.fields['password'].widget.attrs['placeholder'] = "Contraseña"
+        self.fields['password'].label = ''  
 
 """class FormLogin(forms.Form): #Lista de datos para logear
     email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
@@ -85,3 +115,4 @@ class FormRecuperarContraseña(forms.Form): #Lista de datos pararecuperar contra
     email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
     password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Nueva Contraseña'}))
     password_checks = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Repetir Contraseña'}))
+
