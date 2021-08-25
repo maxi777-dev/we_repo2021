@@ -69,16 +69,16 @@ from django.forms.widgets import Widget"""
         return pass2"""
 
 class FormCreateUser(UserCreationForm):
-    name = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Nombre'}))
-    lastname = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Apellido'}))
+    first_name = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Nombre'}))
+    last_name = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Apellido'}))
     email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
     username = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Nombre de Usuario'}))
     class Meta:
         model = User
-        fields = ['name', 'lastname', 'email', 'username','password1', 'password2']
+        fields = ['first_name', 'last_name', 'email', 'username','password1', 'password2']
         help_texts = {
-            'name': None,
-            'lastname': None,
+            'first_name': None,
+            'last_name': None,
             'email': None,
             'username': None,
         }
