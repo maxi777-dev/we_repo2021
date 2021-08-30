@@ -57,8 +57,8 @@ def logear(request): #Logeo de usuarios ya creados
                 else:
                     msj = 'El usuario "' + username + '" no existe'
                     mensajes.append(msj)        
-
-        return render(request, "login.html", {'form': form})
+        context = {'form': form, 'messages': mensajes}
+        return render(request, "login.html", context)
     else:
         return redirect('homepage')
 
