@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block nombre_seccion %}Mis articulos{% endblock %}
+
+{% block contenido %}
+<style>
+    .bot{
+      border: 0;
+      background: none;
+      color:white;
+      display: block;
+      margin: 20px auto;
+      text-align: center;
+      border: 2px solid rgb(52, 147, 224);
+      padding: 14px 40px;
+      width: 300px;
+      outline: none;
+      border-radius: 24px;
+      transition: 0.25s;
+      cursor: pointer;
+    }
+    .bot:hover{
+        background:rgb(52, 147, 224);
+    }
+</style>
+<form class="navbar-form navbar-center" role="search">   
+    <a style = "color:black;" href="{% url 'cargar_articulo' %}" class="bot">       
+        <h4>Agregar Articulos</h4>
+    </a>
+    <h1>Mis Articulos</h1>
+</form>
+
+{% endblock %}

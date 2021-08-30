@@ -39,7 +39,8 @@
                 <ul class="nav navbar-nav navbar-right">
 
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'mis_canjes' %}">Mis canjes</a></li>
+                        <li><a href="{% url 'mis_articulos' %}">Mis Articulos</a></li>
+                        <li><a href="">Mis Canjes</a></li>
                         <li><a href="{% url 'logout' %}">Logout</a></li>
                         <li><a href="{% url 'register' %}">{{user}}</a></li>
                     {% else %}
