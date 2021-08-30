@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from sitio.forms import FormCreateUser, FormLogin, FormRecuperarContraseña
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -120,6 +120,10 @@ def recuperarcontraseña(request): #Esto se usa para recuperar la contraseña
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def mis_canjes(request):
     return render(request, 'mis_canjes.html')
+
+@login_required()
+def cargar_canje(request):
+    return render(request, 'cargar_canje.html')
 
 @login_required(login_url='homepage') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def logout(request):
