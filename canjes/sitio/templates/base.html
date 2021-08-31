@@ -32,7 +32,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><strong>canjea.com</strong> Shop</a>
+                <a class="navbar-brand" href="{% url 'homepage' %}"><strong>canjea.com</strong> Shop</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -40,7 +40,7 @@
 
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'mis_articulos' %}">Mis Articulos</a></li>
-                        <li><a href="">Mis Canjes</a></li>
+                        <li><a href="{% url 'mis_canjes' %}">Mis Canjes</a></li>
                         <li><a href="{% url 'logout' %}">Logout</a></li>
                         <li><a href="{% url 'register' %}">{{user}}</a></li>
                     {% else %}

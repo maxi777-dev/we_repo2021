@@ -125,6 +125,14 @@ def mis_articulos(request):
 def cargar_articulo(request):
     return render(request, 'cargar_articulo.html')
 
+@login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
+def mis_canjes(request):
+    return render(request, 'mis_canjes.html')
+
+@login_required()
+def cargar_canje(request):
+    return render(request, 'cargar_canje.html')
+
 @login_required(login_url='homepage') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def logout(request):
     auth.logout(request)
