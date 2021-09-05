@@ -28,6 +28,17 @@
         <h4>Agregar Articulos</h4>
     </a>
     <h1>Mis Articulos</h1>
+        <ul>
+            {% for article in articles %}
+                <li>
+                    <h3>{{ article.title }}</h3>
+                    <p>{{ article.date_created }}</p>
+                    <button href= "{% url 'articulo' %}">Detalles</button>
+                </li>
+            {% empty %}
+                <li>No tienes artículos todavía.</li>
+            {% endfor %}
+        </ul>
 </form>
 
 {% endblock %}

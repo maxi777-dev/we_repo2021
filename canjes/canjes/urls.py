@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from sitio import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +31,8 @@ urlpatterns = [
     path('recuperarcontraseña/', views.recuperarcontraseña, name='recuperarcontraseña'),
     #path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='homepage'), # HOMEPAGE,
+    path('articulos/<id>', views.article.as_view(), name="articulo"),
     path('activate/<uidb64>/<token>', views.verificationview.as_view(), name="activate"),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

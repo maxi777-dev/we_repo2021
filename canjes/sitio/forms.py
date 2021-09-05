@@ -1,8 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import User, UserCreationForm, AuthenticationForm
+from django.forms import ModelForm
+from .models import *
 
 class FormCreateUser(UserCreationForm):
     first_name = forms.CharField(label="", max_length=40, widget=forms.TextInput(attrs={'placeholder':'Nombre'}))
@@ -75,3 +75,7 @@ class FormRecuperarContraseña(forms.Form): #Lista de datos pararecuperar contra
     password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Nueva Contraseña'}))
     password_checks = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Repetir Contraseña'}))
 
+class FormCreateArticle(ModelForm):
+    class Meta:
+        model = Article
+        fields = ['title', 'description', 'image_one', 'image_two', 'image_three', 'image_four', 'image_five']

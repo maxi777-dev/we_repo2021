@@ -1,7 +1,7 @@
 from django.contrib import auth
-from sitio.models import Profile
+from .models import *
 from django.shortcuts import render, redirect
-from sitio.forms import FormCreateUser, FormLogin, FormRecuperarContraseña
+from sitio.forms import FormCreateUser, FormLogin, FormRecuperarContraseña, FormCreateArticle
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
@@ -67,9 +67,7 @@ def crear_usuario(request): #Registro de nuevo usuario
         mensajes = []
         if request.method == "POST":
             form = FormCreateUser(data=request.POST)
-            print('pasa1')
             if form.is_valid():
-                print('pasa2')
                 validar_mail = request.POST['email']
                 lista_usuarios = User.objects.all() #Se trae todos los usuarios que haya para validar mail existente
                 email_valido = True
@@ -78,7 +76,6 @@ def crear_usuario(request): #Registro de nuevo usuario
                         email_valido = False
                         break
                 if email_valido:
-                    print('pasa3')
                     user = form.save()
                     user.is_active = False
                     grupo = Group.objects.get(name = 'comun')
@@ -119,11 +116,23 @@ def recuperarcontraseña(request): #Esto se usa para recuperar la contraseña
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def mis_articulos(request):
-    return render(request, 'mis_articulos.html')
+    articles = Article.objects.all().filter(user = request.user)
+    return render(request, 'mis_articulos.html', {'articles': articles})
 
 @login_required()
 def cargar_articulo(request):
-    return render(request, 'cargar_articulo.html')
+    mensajes = []
+    if request.method == "POST":
+        form = FormCreateArticle(request.POST, request.FILES)
+        if form.is_valid():
+            new_article = form.save(commit=False)
+            new_article.user = request.user
+            new_article.save()
+            return redirect('mis_articulos')
+    else:
+        form = FormCreateArticle()
+    context = {'form': form, 'messages': mensajes} 
+    return render(request, 'cargar_articulo.html', context)
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def mis_canjes(request):
@@ -137,6 +146,14 @@ def cargar_canje(request):
 def logout(request):
     auth.logout(request)
     return redirect("homepage")
+
+class article(View):
+    def get(self, request, id):
+        try:
+            article = Article.objects.all().filter(pk=id)
+            return render(request, 'articulo.html', {'article': article})
+        except:
+            pass
 
 class verificationview(View):
     def get(self, request, uidb64, token):
