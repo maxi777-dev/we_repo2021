@@ -70,11 +70,6 @@ class FormLogin(AuthenticationForm):
         self.fields['password'].widget.attrs['placeholder'] = "Contraseña"
         self.fields['password'].label = ''  
 
-class FormRecuperarContraseña(forms.Form): #Lista de datos pararecuperar contraseña
-    email = forms.EmailField(label="", max_length=125, widget=forms.TextInput(attrs={'placeholder':'E-Mail'}))
-    password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Nueva Contraseña'}))
-    password_checks = forms.CharField(label="", widget=forms.PasswordInput(attrs={'placeholder':'Repetir Contraseña'}))
-
 class FormCreateArticle(ModelForm):
     class Meta:
         model = Article

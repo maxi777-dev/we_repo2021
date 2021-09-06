@@ -1,7 +1,7 @@
 from django.contrib import auth
 from .models import *
 from django.shortcuts import render, redirect
-from sitio.forms import FormCreateUser, FormLogin, FormRecuperarContraseña, FormCreateArticle
+from sitio.forms import FormCreateUser, FormLogin, FormCreateArticle
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
@@ -108,11 +108,6 @@ def crear_usuario(request): #Registro de nuevo usuario
     else:
         return redirect('homepage')
 
-def recuperarcontraseña(request): #Esto se usa para recuperar la contraseña
-    if request.method == "POST":
-        form = FormRecuperarContraseña(request.POST)
-        return redirect("login")
-    return render(request,"recuperarcontraseña.html") 
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def mis_articulos(request):

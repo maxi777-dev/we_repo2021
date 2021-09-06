@@ -28,7 +28,6 @@ urlpatterns = [
     path('createarticulo/', views.cargar_articulo, name='cargar_articulo'),
     path('miscanjes/',views.mis_canjes, name='mis_canjes'),
     path('createarcanje/', views.cargar_canje, name='cargar_canje'),
-    path('recuperarcontraseña/', views.recuperarcontraseña, name='recuperarcontraseña'),
     #path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='homepage'), # HOMEPAGE,
     path('articulos/<id>', views.article.as_view(), name="articulo"),
