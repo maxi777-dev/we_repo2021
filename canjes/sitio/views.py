@@ -112,7 +112,16 @@ def crear_usuario(request): #Registro de nuevo usuario
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def mis_articulos(request):
     articles = Article.objects.all().filter(user = request.user)
-    return render(request, 'mis_articulos.html', {'articles': articles})
+    content = {}
+    sender = []
+    for article in articles:
+        content = {
+            'title': article.title,
+            'date_created': article.date_created,
+            'link': '/articulo/' + str(article.id),
+        }
+        sender.append(content)
+    return render(request, 'mis_articulos.html', {'articles': sender})
 
 @login_required()
 def cargar_articulo(request):
@@ -145,9 +154,8 @@ def logout(request):
 def article(request, id):
     article = Article.objects.get(pk=id)
     if article:
-        return render(request, 'articulo.html')
+        return render(request, 'articulo.html', {'article': article})
     else:
-        #return redirect('login')
         pass
 
 

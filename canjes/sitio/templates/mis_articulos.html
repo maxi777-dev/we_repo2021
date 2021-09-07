@@ -34,7 +34,7 @@
         <li>
             <h3>{{ article.title }}</h3>
             <p>{{ article.date_created }}</p>
-            <button href= "{% url 'cargar_articulo/article.id' %}">Detalles</button>
+            <a href= "{{article.link}}">Detalles</a>
         </li>
     {% empty %}
         <li>No tienes artículos todavía.</li>
