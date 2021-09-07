@@ -2,4 +2,19 @@
 
 {% block nombre_seccion %}Home{% endblock %}
 
-{% block contenido %}<h1>Pagina inicio</h1>{% endblock %}
+{% block contenido %}<h1>Pagina inicio</h1>
+
+<ul>
+    {% for article in articles %}
+        <li>
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.date_created }}</p>
+            <a href= "{{article.link}}">Detalles</a>
+            <p>{{ article.user }}</p>
+        </li>
+    {% empty %}
+        <li>No hay artículos en el sitio.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -19,7 +19,18 @@ from django.urls import reverse
 from .tokenizer import token_generator
 
 def home(request): #Pagina principal
-    return render(request, 'home.html')
+    articles = Article.objects.all()
+    content = {}
+    sender = []
+    for article in articles:
+        content = {
+            'title': article.title,
+            'date_created': article.date_created,
+            'link': '/articulo/' + str(article.id),
+            'user': article.user
+        }
+        sender.append(content)
+    return render(request, 'home.html', {'articles': sender})
 
 def logear(request): #Logeo de usuarios ya creados
     if not request.user.is_authenticated: # Check if its ok
