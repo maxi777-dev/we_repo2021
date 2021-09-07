@@ -23,22 +23,22 @@
         background:rgb(52, 147, 224);
     }
 </style>
-<form class="navbar-form navbar-center" role="search">   
+<form action="insertar.php" class="form-AddCanje" method="POST" enctype="multipart/form-data" >  
     <a style = "color:black;" href="{% url 'cargar_articulo' %}" class="bot">       
         <h4>Agregar Articulos</h4>
     </a>
-    <h1>Mis Articulos</h1>
-        <ul>
-            {% for article in articles %}
-                <li>
-                    <h3>{{ article.title }}</h3>
-                    <p>{{ article.date_created }}</p>
-                    <button href= "{% url 'articulo' %}">Detalles</button>
-                </li>
-            {% empty %}
-                <li>No tienes artículos todavía.</li>
-            {% endfor %}
-        </ul>
 </form>
+<h1>Mis Articulos</h1>
+<ul>
+    {% for article in articles %}
+        <li>
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.date_created }}</p>
+            <button href= "{% url 'cargar_articulo/article.id' %}">Detalles</button>
+        </li>
+    {% empty %}
+        <li>No tienes artículos todavía.</li>
+    {% endfor %}
+</ul>
 
 {% endblock %}

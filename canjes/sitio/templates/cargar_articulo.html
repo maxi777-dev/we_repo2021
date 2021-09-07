@@ -57,9 +57,9 @@
     }
 </style>
 <body class="bdy">
-    <form method="post" enctype="multipart/form-data">
+    <form action="insertar.php" class="form-AddCanje" method="POST" enctype="multipart/form-data" > 
         {% csrf_token %}
-        <h1>Canjea un artículo!</h1>
+        <h1>Carga un artículo!</h1>
         
         {% if messages %}
           {% for message in messages %}

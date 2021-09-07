@@ -30,7 +30,7 @@ urlpatterns = [
     path('createarcanje/', views.cargar_canje, name='cargar_canje'),
     #path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='homepage'), # HOMEPAGE,
-    path('articulos/<id>', views.article.as_view(), name="articulo"),
+    path('articulos/<id>', views.article, name="detalle_articulo"),
     path('activate/<uidb64>/<token>', views.verificationview.as_view(), name="activate"),
 ]
 

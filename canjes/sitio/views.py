@@ -142,13 +142,14 @@ def logout(request):
     auth.logout(request)
     return redirect("homepage")
 
-class article(View):
-    def get(self, request, id):
-        try:
-            article = Article.objects.all().filter(pk=id)
-            return render(request, 'articulo.html', {'article': article})
-        except:
-            pass
+def article(request, id):
+    article = Article.objects.get(pk=id)
+    if article:
+        return render(request, 'articulo.html')
+    else:
+        #return redirect('login')
+        pass
+
 
 class verificationview(View):
     def get(self, request, uidb64, token):
