@@ -130,6 +130,7 @@ def mis_articulos(request):
             'title': article.title,
             'date_created': article.date_created,
             'link': '/articulo/' + str(article.id),
+            'image': article.image_one.url,
         }
         sender.append(content)
     return render(request, 'mis_articulos.html', {'articles': sender})
