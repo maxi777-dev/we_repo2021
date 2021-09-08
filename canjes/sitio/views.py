@@ -27,7 +27,8 @@ def home(request): #Pagina principal
             'title': article.title,
             'date_created': article.date_created,
             'link': '/articulo/' + str(article.id),
-            'user': article.user
+            'user': article.user,
+            'image': article.image_one.url,
         }
         sender.append(content)
     return render(request, 'home.html', {'articles': sender})
