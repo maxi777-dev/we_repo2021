@@ -21,8 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', views.logear, name="login"), 
-    path('logout/', views.logout, name="logout"),    
+    path('login/', views.logear, name='login'), 
+    path('logout/', views.logout, name='logout'),    
     path('createuser/', views.crear_usuario, name='register'),
     path('articulos/', views.mis_articulos, name='mis_articulos'),
     path('createarticulo/', views.cargar_articulo, name='cargar_articulo'),
@@ -30,8 +30,8 @@ urlpatterns = [
     path('createarcanje/', views.cargar_canje, name='cargar_canje'),
     #path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='homepage'), # HOMEPAGE,
-    path('articulo/<id>', views.article, name="detalle_articulo"),
-    path('activate/<uidb64>/<token>', views.verificationview.as_view(), name="activate"),
+    path('articulo/<id>', views.article, name='detalle_articulo'),
+    path('activate/<uidb64>/<token>', views.verificationview.as_view(), name='activate'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,98 +3,36 @@
 {% block nombre_seccion %}Mis articulos{% endblock %}
 
 {% block contenido %}
-<style>
-    .bot{
-      border: 0;
-      background: none;
-      color:white;
-      display: block;
-      margin: 20px auto;
-      text-align: center;
-      border: 2px solid rgb(52, 147, 224);
-      padding: 14px 40px;
-      width: 300px;
-      outline: none;
-      border-radius: 24px;
-      transition: 0.25s;
-      cursor: pointer;
-    }
-    .bot:hover{
-        background:rgb(52, 147, 224);
-    }
-    .container{
-        width: 100%;
-        max-width: 1200px;
-        height: 430px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin: auto;
-    }
-    body{
-        width: 100%;
-        height: 100%;
-        font-family: sans-serif;
-        letter-spacing: 0.03em;
-        line-height: 1.6;
-    }
-    .container .card{
-        width: 330px;
-        height: 360px;
-        border-radius: 8px;
-        box-shadow: 0 2px 2px rgba(0, 0 , 0 , 0.7);
-        overflow: hidden;
-        margin: 20px;
-        text-align: center;
-        transition: all 0.25s;
-        background-color: slateblue;
-    }
-    .container .card:hover{
-        transform: translateY(-15px);
-        box-shadow: 0 12px 16px rgba(0, 0 , 0 , 0.2);
-    }
-    .container .card img{
-        width: 330px;
-        height: 220px;
-    }
-    .container .card h3{
-        font-weight: 600;
-        color: rgb(0, 0, 0);
-    }
-    .container .card p{
-        padding: 0 1rem;
-        font-size: 16px;
-        font-weight: 300;
-        color: rgb(0, 0, 0);
-    }
-    .container .card a{
-        font-weight: 500;
-        text-decoration: none;
-        color: black
-    }
-    li{ 
-        float: left; 
-        list-style-type: none; 
-        padding: 10px;
-    }
-</style>
-<form action="insertar.php" class="form-AddCanje" method="POST" enctype="multipart/form-data" >  
-    <a style = "color:black;" href="{% url 'cargar_articulo' %}" class="bot">       
-        <h4>Agregar Articulos</h4>
-    </a>
-</form>
-<h1>Mis Articulos</h1>
-    {% for article in articles %}
-    <li>
+
+	<!-- ================ trending product section start ================= -->  
+    <section class="section-margin calc-60px">
         <div class="container">
-            <a class="card" href= "{{article.link}}">
-                <img src="{{article.image}}" alt="">
-                <h3>{{ article.title }}</h3>
-                <p>{{article.date_created}}</p>                                          
-            </a>          
-        </div> 
-    </li>                                      
-    {% empty %}
-        <li>No tienes artículos todavía.</li>
-    {% endfor %}
+          <div class="section-intro pb-60px">
+            <h2><span class="section-intro__style">Mis</span> Artículos</h2>
+          </div>
+          <div class="row">
+            {% for article in articles %}
+              <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="card text-center card-product">
+                  <div class="card-product__img">
+                    <img class="card-img" src="{{article.image}}" alt="{{article.link}}">
+                    <ul class="card-product__imgOverlay">
+                      <li><button href="{{article.link}}"><i class="ti-search"></i></button></li>
+                      <li><button href="{{edit_article.link}}"><i class="ti-pencil"></i></button></li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-product__title"><a href="{{article.link}}">{{ article.title }}</a></h4>
+                    <!--p class="card-product__price">$150.00</p-->
+                  </div>
+                </div>
+              </div>
+            {% empty %}
+              <p>No hay artículos en el sitio.</p>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+      <!-- ================ trending product section end ================= -->  
+
 {% endblock %}

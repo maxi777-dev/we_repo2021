@@ -116,7 +116,7 @@ def crear_usuario(request): #Registro de nuevo usuario
         else:
             form = FormCreateUser()
         context = {'form': form, 'messages': mensajes}   
-        return render(request, 'crear_usuario.html', context)
+        return render(request, 'register.html', context)
     else:
         return redirect('homepage')
 
@@ -167,7 +167,7 @@ def logout(request):
 def article(request, id):
     article = Article.objects.get(pk=id)
     if article:
-        return render(request, 'articulo.html', {'article': article})
+        return render(request, 'single-product.html', {'article': article})
     else:
         pass
 

@@ -33,8 +33,12 @@
           </button>
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-              <li class="nav-item active"><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
-              <li class="nav-item submenu dropdown">
+              <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'mis_articulos' %}">Mis artículos</a></li>
+              {% if user.is_authenticated %}                
+                <li class="nav-item"><a class="nav-link" href="{% url 'mis_canjes' %}">Mis canjes</a></li>
+              {% endif %}
+              <!--li class="nav-item submenu dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Shop</a>
                 <ul class="dropdown-menu">
@@ -62,13 +66,20 @@
                   <li class="nav-item"><a class="nav-link" href="tracking-order.html">Tracking</a></li>
                 </ul>
               </li>
-              <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+              <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li-->
             </ul>
 
             <ul class="nav-shop">
-              <li class="nav-item"><button><i class="ti-search"></i></button></li>
+              <!--li class="nav-item"><button><i class="ti-search"></i></button></li>
               <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
-              <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+              <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li-->
+                {% if user.is_authenticated %}
+                  <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                  <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrate</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="#profile">{{user}}</a></li>
             </ul>
           </div>
         </div>
