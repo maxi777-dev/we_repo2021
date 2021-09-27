@@ -24,15 +24,17 @@
 						<form class="row login_form" action="." id="register_form" >
 
 							{% csrf_token %}
-
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" name="username" placeholder="Nombre de Usuario" maxlength="40" autofocus required id="id_username">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" name="first_name" placeholder="Nombre" maxlength="40" required id="id_last_name">
+							</div>
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" name="last_name" placeholder="Apellido" maxlength="40" required id="id_last_name">
 							</div>
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" name="email" placeholder="E-Mail" maxlength="125" required id="id_email">
-							</div>							
-							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="username" placeholder="Nombre de Usuario" maxlength="40" autofocus required id="id_username">
 							</div>							
 							<div class="col-md-12 form-group">
 								<input type="password" class="form-control" name="password1" autocomplete="new-password" placeholder="Contraseña" required id="id_password1">

@@ -10,6 +10,9 @@
           <div class="section-intro pb-60px">
             <h2><span class="section-intro__style">Mis</span> Artículos</h2>
           </div>
+          <div class="section-intro pb-60px">
+            <a class="button" href="{% url 'cargar_articulo' %}"><p>Cargar nuevo</p></a>
+          </div>
           <div class="row">
             {% for article in articles %}
               <div class="col-md-6 col-lg-4 col-xl-3">
