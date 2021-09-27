@@ -32,6 +32,7 @@ urlpatterns = [
     path('', views.home, name='homepage'), # HOMEPAGE,
     path('articulo/<id>', views.article, name='detalle_articulo'),
     path('activate/<uidb64>/<token>', views.verificationview.as_view(), name='activate'),
+    path('article_categories/<id>', views.get_category, name='get_category'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

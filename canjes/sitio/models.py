@@ -13,10 +13,48 @@ class Profile(models.Model):
     def __str__(self):
         return self.nombre + ' ' + self.apellido
 
-#class CategoriasArt(models.Model):
+class Category(models.Model):
+    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
+    title = models.CharField(max_length = 255, null = False)
+    subtitle = models.CharField(max_length = 255, null = False)
+
+    def __unicode__(self):
+        if self.subtitle:
+            return "%s - %s" % (self.title, self.subtitle)
+        else:
+            return self.title
+
+    __str__ = __unicode__
+
+    class Meta:
+        ordering = ("title",)
+        verbose_name = "category"
+        verbose_name_plural = "categories"
+
+    def save(self, *args, **kwargs):
+        # Raise on circular reference
+        parent = self.parent
+        while parent is not None:
+            if parent == self:
+                raise RuntimeError("Circular references not allowed")
+            parent = parent.parent
+
+        super(Category, self).save(*args, **kwargs)
+
+    @property
+    def children(self):
+        return self.category_set.all().order_by("title")
+
+    @property
+    def tags(self):
+        return Tag.objects.filter(categories__in=[self]).order_by("title")
+
+    def get_absolute_url(self):
+        return reverse("category_object_list", kwargs={"category_slug": self.slug})
     
 class Article(models.Model):
     user = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE)
+    category = models.ForeignKey(Category, null = True, default = None, on_delete = models.CASCADE)
     title = models.CharField(max_length = 255, null = False)
     date_created = models.DateTimeField(default=timezone.now)
     description = models.CharField(max_length = 2055, null = False)
@@ -28,9 +66,11 @@ class Article(models.Model):
     image_five = models.ImageField(upload_to = "articles/images/", null= True, blank = True)
     #caregory = Class CategoriasArt() para podes buscar y ubicar el art
 
+class Comment(models.Model):
+    article = models.ForeignKey(Article, null = True, default = None, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE)
+    comment = models.CharField(max_length = 255, null = False)
+    date_created = models.DateTimeField(default=timezone.now)
+
 
 #class Canje(models.Model):
-
-
-
-# AGgregar para que una persona pueda canjear mpas d eun art en un mismo canje

@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.contrib import messages
 from django.views.generic import View
+from django.http import JsonResponse
 
 ## TOKEN AUTH USER
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -19,7 +20,7 @@ from django.urls import reverse
 from .tokenizer import token_generator
 
 def home(request): #Pagina principal
-    articles = Article.objects.all()
+    articles = Article.objects.order_by("-date_created")[:10]
     content = {}
     sender = []
     for article in articles:
@@ -171,6 +172,17 @@ def article(request, id):
     else:
         pass
 
+def get_category(request, id):
+    if request.method == "GET":
+        categories = Category.objects.all()
+        print(id)
+        if id == '0':
+            categories = categories.filter(parent=None).values()
+        else:
+            categories = categories.filter(parent=id).values()
+        categories_list = list(categories)
+        return JsonResponse(categories_list, safe=False)
+    pass
 
 class verificationview(View):
     def get(self, request, uidb64, token):
