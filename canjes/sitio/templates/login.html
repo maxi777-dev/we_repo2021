@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 
 {% block nombre_seccion %}Login{% endblock %}
@@ -26,13 +25,20 @@
 							{% csrf_token %}
 
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" placeholder="Usuario" required id="id_username">
+								<input type="username" class="form-control" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" placeholder="Usuario" required id="id_username">
 								<!--input type="text" class="form-control" id="name" name="name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"-->
 							</div>
 							<div class="col-md-12 form-group">
 								<input type="password" class="form-control" name="password" autocomplete="current-password" placeholder="Contraseña" required id="id_password">
 								<!--input type="text" class="form-control" id="name" name="name" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"-->
 							</div>
+							{% if messages %}
+          						{% for message in messages %}
+            						<div style="color: rgb(150, 18, 18); background-color:rgb(190, 129, 129); border-color: rgb(150, 18, 18);" class="alert alert-success" role="alert"> 
+              							{{message}}
+            						</div>
+          						{% endfor %}
+        					{% endif %}
 							<div class="col-md-12 form-group">
 								<div class="creat_account">
 									<input type="checkbox" id="f-option2" name="selector">

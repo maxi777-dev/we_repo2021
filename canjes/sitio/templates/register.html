@@ -4,7 +4,7 @@
 {% block nombre_seccion %}Login{% endblock %}
 
 {% block contenido %}
-  
+
   <!--================Login Box Area =================-->
 	<section class="login_box_area section-margin">
 		<div class="container">
@@ -21,33 +21,37 @@
 				<div class="col-lg-6">
 					<div class="login_form_inner register_form_inner">
 						<h3>Crear una cuenta</h3>
-						<form class="row login_form" action="." id="register_form" >
-
-							{% csrf_token %}
+						<form class="row login_form" action="." id="register_form" method="POST">
+							{% csrf_token %}						
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="username" placeholder="Nombre de Usuario" maxlength="40" autofocus required id="id_username">
+								<input type="username" class="form-control" name="username" placeholder="Nombre de Usuario" maxlength="40" autofocus required id="username">
+								<div style="color: rgb(150, 18, 18);">{{form.errors.username}}</div>							
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="first_name" placeholder="Nombre" maxlength="40" required id="id_last_name">
+								<input type="text" class="form-control" name="first_name" placeholder="Nombre" maxlength="40" required id="first_name">
+								<div style="color: rgb(150, 18, 18);">{{form.errors.first_name}}</div>
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="last_name" placeholder="Apellido" maxlength="40" required id="id_last_name">
+								<input type="text" class="form-control" name="last_name" placeholder="Apellido" maxlength="40" required id="last_name">
+								<div style="color: rgb(150, 18, 18);">{{form.errors.last_name}}</div>
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="email" placeholder="E-Mail" maxlength="125" required id="id_email">
+								<input type="email" class="form-control" name="email" placeholder="E-Mail" maxlength="125" required id="email">
+								<div style="color: rgb(150, 18, 18);">{{form.errors.email}}</div>
 							</div>							
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" name="password1" autocomplete="new-password" placeholder="Contraseña" required id="id_password1">
+								<input type="password" class="form-control" name="password1" autocomplete="new-password" placeholder="Contraseña" required id="password1">
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" name="password2" autocomplete="new-password" placeholder="Confirmar contraseña" required id="id_password2">
-							</div>							
+								<input type="password" class="form-control" name="password2" autocomplete="new-password" placeholder="Confirmar contraseña" required id="password2">
+								<div style="color: rgb(150, 18, 18);">{{form.errors.password2}}</div>	
+							</div>							 			
 							<div class="col-md-12 form-group">
 								<div class="creat_account">
 									<input type="checkbox" id="f-option2" name="selector">
 									<label for="f-option2">Keep me logged in</label>
 								</div>
-							</div>
+							</div>							
 							<div class="col-md-12 form-group">
 								<button type="submit" value="submit" class="button button-register w-100">Registrar</button>
 							</div>
