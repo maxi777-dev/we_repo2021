@@ -1,33 +1,41 @@
 $(document).ready(function() {
-  fetch_info(true, '/article_categories/0');
+  fetch('/article_categories/0')
+    .then(response => response.json())
+    .then(data => add_categories(data));
 })
 
-document.getElementById("item-dropdown1").addEventListener("click", fetch_info(false, ));
-
-function fetch_info(bool, url){
-  if (bool){
-    fetch(url)
-    .then(response => response.json())
-    .then(data => add_categories1(data));
-  }else{
-    fetch(url)
+function fill_sub_category(id){
+  fetch("/article_categories/"+id)
     .then(response => response.json())
     .then(data => add_sub_categories(data));
-  }
 }
 
-function add_categories1(data) {
-  $.each(data, function(val, text) {
-    $(dropdownMenuLink1).append(
-        $('<option id="item-dropdown1" class="dropdown-item" onclick="return fetch_info(false, /article_categories/'+ text.id +')"></option>').val(val).html(text.title)
-    );
+function add_categories(data) {
+  var categorias = '';
+  var i = 0;
+  $.each(data, function(val, text) {    
+    if(i==0){
+      categorias += `<option id="item-dropdown`+ text.id +`" value="` + text.id + `" selected>` + text.title + `</option>`;
+      fill_sub_category(text.id);
+    }else{
+      categorias += `<option id="item-dropdown`+ text.id +`" value="` + text.id + `">` + text.title + `</option>`;
+    }
+    i++;
   });
+  $("#dropdownMenuLink1").html(categorias);
 }
+
 
 function add_sub_categories(data) {
-  $.each(data, function(val, text) {
-    $(dropdownMenuLink2).append(
-        $('<option class="dropdown-item"></option>').val(val).html(text.title)
-    );
+  var categorias = '';
+  var i = 0;
+  $.each(data, function(val, text) {    
+    if(i==0){
+      categorias += `<option id="item-dropdown2" value="` + text.id + `" selected>` + text.title + `</option>`;
+    }else{
+      categorias += `<option id="item-dropdown2" value="` + text.id + `">` + text.title + `</option>`;
+    }
+    i++;
   });
+  $("#dropdownMenuLink2").html(categorias);
 }

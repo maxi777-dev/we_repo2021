@@ -1,7 +1,7 @@
 from django.contrib import auth
 from .models import *
-from django.shortcuts import render, redirect
-from sitio.forms import FormCreateUser, FormLogin, FormCreateArticle
+from django.shortcuts import render, redirect, get_object_or_404
+from sitio.forms import FormCreateUser, FormLogin, FormCreateArticle, FormCreateComment
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
@@ -132,10 +132,23 @@ def mis_articulos(request):
             'title': article.title,
             'date_created': article.date_created,
             'link': '/articulo/' + str(article.id),
+            'edit_article': '/articulo/edit/' + str(article.id),
             'image': article.image_one.url,
         }
         sender.append(content)
     return render(request, 'mis_articulos.html', {'articles': sender})
+
+@login_required(login_url='login')
+def edit_article(request, id):
+    article = get_object_or_404(Article, id=id)
+    form = FormCreateArticle(request.POST or None, instance=article)
+    if request.user == article.user:
+        if form.is_valid():
+            form.save()
+            return redirect('mis_articulos')
+        return render(request, 'edit_articulo.html', {'article': article})
+    else:
+        return redirect('homepage')
 
 @login_required()
 def cargar_articulo(request):
@@ -167,15 +180,15 @@ def logout(request):
 
 def article(request, id):
     article = Article.objects.get(pk=id)
+    comments = Comment.objects.filter(article=article.id)
     if article:
-        return render(request, 'single-product.html', {'article': article})
+        return render(request, 'single-product.html', {'article': article, 'comments': comments})
     else:
         pass
 
 def get_category(request, id):
     if request.method == "GET":
         categories = Category.objects.all()
-        print(id)
         if id == '0':
             categories = categories.filter(parent=None).values()
         else:
@@ -183,6 +196,35 @@ def get_category(request, id):
         categories_list = list(categories)
         return JsonResponse(categories_list, safe=False)
     pass
+
+@login_required()
+def comment(request, id):
+    if request.method == 'POST':
+        article = Article.objects.get(pk=id)
+        comment = request.POST['comment']
+        Comment.objects.create(
+            comment=comment, 
+            user=request.user,
+            article=article,
+        )
+    return redirect('detalle_articulo', id)
+
+@login_required()
+def canjear(request, id):
+    if request.method == 'POST':
+        article = Article.objects.get(pk=id)
+        comment = request.POST['canjear']
+        Comment.objects.create(
+            comment=comment, 
+            user=request.user,
+            article=article,
+        )
+    return redirect('detalle_articulo', id)
+
+def categories(request):
+    categories = Category.objects.all()
+    return render(request, 'categories.html', {'categories': categories})
+
 
 class verificationview(View):
     def get(self, request, uidb64, token):

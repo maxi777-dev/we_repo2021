@@ -115,3 +115,8 @@ class FormCreateArticle(ModelForm):
     class Meta:
         model = Article
         fields = ['title', 'category', 'description', 'image_one', 'image_two', 'image_three', 'image_four', 'image_five']
+
+class FormCreateComment(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment']

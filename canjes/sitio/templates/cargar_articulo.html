@@ -3,7 +3,7 @@
 
 {% load static %}
 
-{% block nombre_seccion %}Login{% endblock %}
+{% block nombre_seccion %}Carga un artículo{% endblock %}
 
 {% block jquery %}
 	<script src="{% static 'js/categories.js' %}"></script>
@@ -24,34 +24,20 @@
 						<input type="text" class="form-control" name="title" autofocus autocapitalize="none" autocomplete="title" maxlength="150" placeholder="Tïtulo" required id="id_title">
 					</div>
 
-					<div class="col-md-12 form-group dropdown show">
-						<a class="btn btn-info dropdown-toggle button-login" role="button" id="dropdownMenuLinkName1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Categoría primaria
-						</a>
-					  
-						<div class="dropdown-menu" id="dropdownMenuLink1" aria-labelledby="dropdownMenuLink">
-						  <!--a class="dropdown-item">Action</a>
-						  <a class="dropdown-item">Another action</a>
-						  <a class="dropdown-item">Something else here</a-->
-						</div>
-					  </div>
+					
+					<div class="col-md-12 form-group">
+						<select class="form-select pt-2 pb-2 text-center" name="seleccion1" style="width: 100%; background-color: #007bff; color: white; font-weight: 600;"  id="dropdownMenuLink1" aria-label="Default select example" onchange="if(this.selectedIndex){fill_sub_category(this.selectedIndex)}">
+						</select>
+					</div>
 
-					<div class="col-md-12 form-group dropdown show">
-						<a class="btn btn-info dropdown-toggle button-login" role="button" id="dropdownMenuLinkName2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						  Categoría secundaria
-						</a>
-					  
-						<div class="dropdown-menu" id="dropdownMenuLink2" aria-labelledby="dropdownMenuLink">
-							<!--a class="dropdown-item">Action</a>
-							<a class="dropdown-item">Another action</a>
-							<a class="dropdown-item">Something else here</a-->
-						</div>
+					<div class="col-md-12 form-group">
+						<select class="form-select pt-2 pb-2 text-center" name="category" style="width: 100%; background-color: #007bff; color: white; font-weight: 600;" id="dropdownMenuLink2" aria-label="Default select example">
+						</select>
 					</div>
 
 					<div class="col-md-12 form-group">
 						<textarea name="description" cols="40" rows="10" required="" class="form-control" placeholder="Descripcion" required id="id_description"></textarea>
-					</div>
-					
+					</div>					
 
 					<div class="col-md-12 form-group">
 						<label for="id_image_one">Imagen principal:</label>
