@@ -197,6 +197,25 @@ def get_category(request, id):
         return JsonResponse(categories_list, safe=False)
     pass
 
+def get_articles_by_category(request, id):
+    if request.method == "GET":
+        articles = Article.objects.filter(category=id)
+        content = {}
+        sender = []
+        for article in articles:
+            content = {
+                'title': article.title,
+                'date_created': article.date_created,
+                'link': '/articulo/' + str(article.id),
+                'edit_article': '/articulo/edit/' + str(article.id),
+                'image': article.image_one.url,
+                'category': article.category.title,
+                'user': str(article.user),
+            }
+            sender.append(content)
+        return JsonResponse(sender, safe=False)
+    pass
+
 @login_required()
 def comment(request, id):
     if request.method == 'POST':
@@ -222,8 +241,22 @@ def canjear(request, id):
     return redirect('detalle_articulo', id)
 
 def categories(request):
-    categories = Category.objects.all()
-    return render(request, 'categories.html', {'categories': categories})
+    categories = Category.objects.exclude(parent=None)
+    articles = Article.objects.order_by("-date_created")[:9]
+    content = {}
+    sender = []
+    for article in articles:
+        content = {
+            'title': article.title,
+            'date_created': article.date_created,
+            'link': '/articulo/' + str(article.id),
+            'edit_article': '/articulo/edit/' + str(article.id),
+            'image': article.image_one.url,
+            'category': article.category.title,
+            'user': str(article.user),
+        }
+        sender.append(content)
+    return render(request, 'categories.html', {'categories': categories, 'articles': sender})
 
 
 class verificationview(View):

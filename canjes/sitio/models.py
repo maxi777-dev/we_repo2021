@@ -65,6 +65,16 @@ class Article(models.Model):
     image_four = models.ImageField(upload_to = "articles/images/", null= True, blank = True)
     image_five = models.ImageField(upload_to = "articles/images/", null= True, blank = True)
 
+    def __unicode__(self):
+        return "%s - %s" % (self.title, self.description)
+
+    __str__ = __unicode__
+
+    class Meta:
+        ordering = ("title",)
+        verbose_name = "article"
+        verbose_name_plural = "articles"
+
 class Comment(models.Model):
     article = models.ForeignKey(Article, null = True, default = None, on_delete = models.CASCADE)
     user = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE)
