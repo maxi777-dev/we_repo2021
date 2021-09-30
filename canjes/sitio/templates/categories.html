@@ -1,0 +1,89 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block nombre_seccion %}Categorias{% endblock %}
+
+{% block jquery %}
+	<script src="{% static 'js/refresher.js' %}"></script>
+{% endblock %}
+
+{% block contenido %}
+
+	<section class="blog-banner-area" id="category">
+		<div class="container h-100">
+			<div class="blog-banner">
+				<div class="text-center">
+					<h1>Busqueda</h1>
+					<nav aria-label="breadcrumb" class="banner-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Shop Category</li>
+            </ol>
+          </nav>
+				</div>
+			</div>
+    </div>
+	</section>
+	  
+  <section class="section-margin--small mb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-5">
+          <div class="sidebar-categories">
+            <div class="head">Categorias</div>
+            <ul class="main-categories">
+              <li class="common-filter">
+                <form action="#">
+                  <ul>
+                    {% for category in categories %}
+                      <li class="filter-list"><input class="pixel-radio" type="radio" id="filter{{ category.pk }}" onclick="refresh({{ category.pk }});" name="brand"><label for="men">{{category.title}}</label></li>
+                    {% endfor %}
+                    </ul>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xl-9 col-lg-8 col-md-7">
+          <!-- Start Filter Bar -->
+          <div class="filter-bar d-flex flex-wrap align-items-center">
+            <div>
+              <div class="input-group filter-bar-search">
+                <input type="text" placeholder="Search">
+                <div class="input-group-append">
+                  <button type="button"><i class="ti-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Filter Bar -->
+          <!-- Start Best Seller -->
+          <section class="lattest-product-area pb-40 category-list">
+            <div class="row" id="articles">
+              {% for article in articles|slice:":9" %}
+                <div class="col-md-6 col-lg-4">
+                  <div class="card text-center card-product">
+                    <div class="card-product__img">
+                      <img class="card-img" src="{{ article.image }}" alt="{{ article.link }}">
+                    </div>
+                    <div class="card-body">
+                      <p>{{ article.category.title }}</p>
+                      <h4 class="card-product__title"><a href="{{ article.link }}">{{ article.title }}</a></h4>
+                      <p>{{ article.user }}</p>
+                    </div>
+                  </div>
+                </div>
+              {% empty %}
+                <p>No hay artículos aún</p>
+              {% endfor %}
+            </div>            
+          </section>
+          <!-- End Best Seller -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock contenido %}

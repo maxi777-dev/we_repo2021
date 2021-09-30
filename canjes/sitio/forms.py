@@ -120,3 +120,8 @@ class FormCreateComment(ModelForm):
     class Meta:
         model = Comment
         fields = ['comment']
+
+class FormCreateCanje(ModelForm):
+    class Meta:
+        model = Canje
+        fields = ['articles_creator', 'articles_assignee', 'comment']

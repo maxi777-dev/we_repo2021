@@ -1,82 +1,41 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
 {% block nombre_seccion %}Home{% endblock %}
 
-{% block jquery %}
-	<script src="{% static 'js/refresher.js' %}"></script>
-{% endblock %}
-
 {% block contenido %}
-  <section class="section" style="margin-top: 20px; margin-bottom: 20px;">
-    {% if user.is_authenticated %}
-      <div style="text-align: center; font-size: 40px; color: black;"> 
-        Bienvenido {{user}} a Canjea
-      </div>
-    {% endif %}
-    <div style="margin-bottom: 30px; text-align: center; font-family: 'Oswald', sans-serif; font-size: 30px; line-height: 50px; background: #384aeb; color:white">
-      Lista de Articulos para canjear
-    </div>
+
+  <!-- ================ trending product section start ================= -->  
+  <section class="section-margin calc-60px">
     <div class="container">
+      <div class="section-intro pb-60px">
+        <p>Populares</p>
+        <h2><span class="section-intro__style">Artículos</span> tendencia</h2>
+      </div>
       <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-5">
-          <div class="sidebar-categories">
-            <div class="head">Categorias</div>
-            <ul class="main-categories">
-              <li class="common-filter">
-                <form action="#">
-                  <ul>
-                    {% for category in categories %}
-                      <li class="filter-list">
-                        <label><input class="pixel-radio" type="radio" id="filter{{ category.pk }}" onclick="refresh({{ category.pk }});" name="brand">{{category.title}}</label>
-                      </li>
-                    {% endfor %}
-                  </ul>
-                </form>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-xl-9 col-lg-8 col-md-7">
-          <!-- Start Filter Bar -->
-          <div class="filter-bar d-flex flex-wrap align-items-center">
-            <div>
-              <div class="input-group filter-bar-search">
-                <input type="text" placeholder="Search">
-                <div class="input-group-append">
-                  <button type="button"><i class="ti-search"></i></button>
-                </div>
-                  <button style="margin-left: 427px; color: white; background-color:#384aeb;" type="button" onclick="refresh2()"><i style="color: white;" class="fas fa-sync-alt"></i> &nbsp; Mostrar Todos</button>
+        {% for article in articles %}
+          <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="card text-center card-product">
+              <div class="card-product__img">
+                <img class="card-img" src="{{article.image}}" alt="{{article.link}}">
+                <ul class="card-product__imgOverlay">
+                  <li><button><i class="ti-search"></i></button></li>
+                  <li><button><i class="ti-shopping-cart"></i></button></li>
+                  <li><button><i class="ti-heart"></i></button></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <p>{{ article.user }}</p>
+                <h4 class="card-product__title"><a href="{{article.link}}">{{ article.title }}</a></h4>
+                <!--p class="card-product__price">$150.00</p-->
               </div>
             </div>
           </div>
-          <!-- End Filter Bar -->
-          <!-- Start Best Seller -->
-          <section class="lattest-product-area pb-40 category-list">
-            <div class="row" id="articles">
-              {% for article in articles|slice:":9" %}
-                <div class="col-md-6 col-lg-4">
-                  <div class="card text-center card-product">
-                    <div class="card-product__img">
-                      <img class="card-img" src="{{ article.image }}" alt="{{ article.link }}">
-                    </div>
-                    <div class="card-body">
-                      <p>{{ article.category.title }}</p>
-                      <h4 class="card-product__title"><a href="{{ article.link }}">{{ article.title }}</a></h4>
-                      <p>{{ article.user }}</p>
-                    </div>
-                  </div>
-                </div>
-              {% empty %}
-                <p>No hay artículos aún</p>
-              {% endfor %}
-            </div>            
-          </section>
-          <!-- End Best Seller -->
-        </div>
+        {% empty %}
+          <p>No hay artículos en el sitio.</p>
+        {% endfor %}
       </div>
     </div>
   </section>
+  <!-- ================ trending product section end ================= -->  
 
-{% endblock contenido %}
+  {% endblock %}

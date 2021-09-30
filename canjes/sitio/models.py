@@ -82,7 +82,10 @@ class Comment(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
 
 class Canje(models.Model):
-    article_one = models.ForeignKey(Article, null = True, default = None, on_delete = models.CASCADE, related_name='creator')
-    article_two = models.ForeignKey(Article, null = True, default = None, on_delete = models.CASCADE, related_name='assignee')
+    articles_creator = models.ManyToManyField(Article, related_name='creator')
+    articles_assignee = models.ManyToManyField(Article, related_name='assignee')
     comment = models.CharField(max_length = 255, null = False)
     date_created = models.DateTimeField(default=timezone.now)
+    user_creator = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE, related_name='creator')
+    user_assignee = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE, related_name='assignee')
+    state = models.IntegerField(default = 0, null = False)
