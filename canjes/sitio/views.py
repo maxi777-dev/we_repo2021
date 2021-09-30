@@ -20,8 +20,7 @@ from django.urls import reverse
 from .tokenizer import token_generator
 
 def home(request): #Pagina principal
-    categories = Category.objects.exclude(parent=None)
-    articles = Article.objects.order_by("-date_created")[:9]
+    articles = Article.objects.order_by("-date_created")[:10]
     content = {}
     sender = []
     for article in articles:
@@ -29,13 +28,11 @@ def home(request): #Pagina principal
             'title': article.title,
             'date_created': article.date_created,
             'link': '/articulo/' + str(article.id),
-            'edit_article': '/articulo/edit/' + str(article.id),
+            'user': article.user,
             'image': article.image_one.url,
-            'category': article.category.title,
-            'user': str(article.user),
         }
         sender.append(content)
-    return render(request, 'home.html', {'categories': categories, 'articles': sender})
+    return render(request, 'home.html', {'articles': sender})
 
 def logear(request): #Logeo de usuarios ya creados
     if not request.user.is_authenticated: # Check if its ok
@@ -231,17 +228,35 @@ def comment(request, id):
         )
     return redirect('detalle_articulo', id)
 
-@login_required()
-def canjear(request, id):
+@login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
+def iniciar_canje(request, id_article):
     if request.method == 'POST':
-        article = Article.objects.get(pk=id)
-        comment = request.POST['canjear']
-        Comment.objects.create(
-            comment=comment, 
-            user=request.user,
-            article=article,
-        )
-    return redirect('detalle_articulo', id)
+        pass
+    else:
+        article_user = Article.objects.get(pk=id_article).user
+        article_user_pk = article_user.pk
+        articles = Article.objects.filter(user=article_user)
+        own_articles = Article.objects.filter(user=request.user)
+        return render(request, 'iniciar_canje.html', {'articles': articles, 'own_articles': own_articles, 'user': article_user})
+
+def categories(request):
+    categories = Category.objects.exclude(parent=None)
+    articles = Article.objects.order_by("-date_created")[:9]
+    content = {}
+    sender = []
+    for article in articles:
+        content = {
+            'title': article.title,
+            'date_created': article.date_created,
+            'link': '/articulo/' + str(article.id),
+            'edit_article': '/articulo/edit/' + str(article.id),
+            'image': article.image_one.url,
+            'category': article.category.title,
+            'user': str(article.user),
+        }
+        sender.append(content)
+    return render(request, 'categories.html', {'categories': categories, 'articles': sender})
+
 
 class verificationview(View):
     def get(self, request, uidb64, token):

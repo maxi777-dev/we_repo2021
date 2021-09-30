@@ -35,8 +35,9 @@ urlpatterns = [
     path('activate/<uidb64>/<token>', views.verificationview.as_view(), name='activate'),
     path('article_categories/<id>', views.get_category, name='get_category'),
     path('get_articles_by_category/<id>', views.get_articles_by_category, name='get_articles_by_category'),
-    path('home/', views.home, name='homepage'),
+    #path('categorias', views.categories, name='categories'),
     path('comment/<id>', views.comment, name='comment'),
+    path('iniciar_canje/<id_article>', views.iniciar_canje, name='iniciar_canje'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
