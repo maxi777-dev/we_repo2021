@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 
 {% load static %}
@@ -38,9 +37,11 @@
                 <form action="#">
                   <ul>
                     {% for category in categories %}
-                      <li class="filter-list"><input class="pixel-radio" type="radio" id="filter{{ category.pk }}" onclick="refresh({{ category.pk }});" name="brand"><label for="men">{{category.title}}</label></li>
+                      <li class="filter-list">
+                        <label><input class="pixel-radio" type="radio" id="filter{{ category.pk }}" onclick="refresh({{ category.pk }});" name="brand">{{category.title}}</label>
+                      </li>
                     {% endfor %}
-                    </ul>
+                  </ul>
                 </form>
               </li>
             </ul>

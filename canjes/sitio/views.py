@@ -20,7 +20,8 @@ from django.urls import reverse
 from .tokenizer import token_generator
 
 def home(request): #Pagina principal
-    articles = Article.objects.order_by("-date_created")[:10]
+    categories = Category.objects.exclude(parent=None)
+    articles = Article.objects.order_by("-date_created")[:9]
     content = {}
     sender = []
     for article in articles:
@@ -28,11 +29,13 @@ def home(request): #Pagina principal
             'title': article.title,
             'date_created': article.date_created,
             'link': '/articulo/' + str(article.id),
-            'user': article.user,
+            'edit_article': '/articulo/edit/' + str(article.id),
             'image': article.image_one.url,
+            'category': article.category.title,
+            'user': str(article.user),
         }
         sender.append(content)
-    return render(request, 'home.html', {'articles': sender})
+    return render(request, 'home.html', {'categories': categories, 'articles': sender})
 
 def logear(request): #Logeo de usuarios ya creados
     if not request.user.is_authenticated: # Check if its ok
@@ -239,25 +242,6 @@ def canjear(request, id):
             article=article,
         )
     return redirect('detalle_articulo', id)
-
-def categories(request):
-    categories = Category.objects.exclude(parent=None)
-    articles = Article.objects.order_by("-date_created")[:9]
-    content = {}
-    sender = []
-    for article in articles:
-        content = {
-            'title': article.title,
-            'date_created': article.date_created,
-            'link': '/articulo/' + str(article.id),
-            'edit_article': '/articulo/edit/' + str(article.id),
-            'image': article.image_one.url,
-            'category': article.category.title,
-            'user': str(article.user),
-        }
-        sender.append(content)
-    return render(request, 'categories.html', {'categories': categories, 'articles': sender})
-
 
 class verificationview(View):
     def get(self, request, uidb64, token):

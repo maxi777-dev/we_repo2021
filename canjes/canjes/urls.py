@@ -35,7 +35,7 @@ urlpatterns = [
     path('activate/<uidb64>/<token>', views.verificationview.as_view(), name='activate'),
     path('article_categories/<id>', views.get_category, name='get_category'),
     path('get_articles_by_category/<id>', views.get_articles_by_category, name='get_articles_by_category'),
-    path('categorias', views.categories, name='categories'),
+    path('home/', views.home, name='homepage'),
     path('comment/<id>', views.comment, name='comment'),
 ]
 
