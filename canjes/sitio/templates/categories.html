@@ -11,22 +11,7 @@
 
 {% block contenido %}
 
-	<section class="blog-banner-area" id="category">
-		<div class="container h-100">
-			<div class="blog-banner">
-				<div class="text-center">
-					<h1>Busqueda</h1>
-					<nav aria-label="breadcrumb" class="banner-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Shop Category</li>
-            </ol>
-          </nav>
-				</div>
-			</div>
-    </div>
-	</section>
-	  
+</style>
   <section class="section-margin--small mb-5">
     <div class="container">
       <div class="row">
@@ -63,18 +48,16 @@
           <section class="lattest-product-area pb-40 category-list">
             <div class="row" id="articles">
               {% for article in articles|slice:":9" %}
-                <div class="col-md-6 col-lg-4">
-                  <div class="card text-center card-product">
-                    <div class="card-product__img">
-                      <img class="card-img" src="{{ article.image }}" alt="{{ article.link }}">
-                    </div>
-                    <div class="card-body">
+                <div class="wrapper">                    
+                  <a href="{{ article.link }}">
+                    <img src="{{ article.image }}">
+                    <div class="content">
                       <p>{{ article.category.title }}</p>
-                      <h4 class="card-product__title"><a href="{{ article.link }}">{{ article.title }}</a></h4>
-                      <p>{{ article.user }}</p>
+                      <h3>{{ article.title }}</h3>
+                      <p class="p1">{{ article.user }}</p>
                     </div>
-                  </div>
-                </div>
+                  </a>                  
+                </div> 
               {% empty %}
                 <p>No hay artículos aún</p>
               {% endfor %}

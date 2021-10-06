@@ -8,18 +8,16 @@ function refresh(id){
 function add_articles(data) {
     var articles = '';
     $.each(data, function(val, text) {
-        articles += 
-        `<div class="col-md-6 col-lg-4">
-            <div class="card text-center card-product">
-                <div class="card-product__img">
-                    <img class="card-img" src="` + text.image + `" alt="` + text.link + `">
-                </div>
-                <div class="card-body">
+        articles +=
+        `<div class="wrapper">                    
+            <a href="` + text.link + `">
+                <img src="` + text.image + `">
+                <div class="content">
                     <p>` + text.category + `</p>
-                    <h4 class="card-product__title"><a href="` + text.link + `">` + text.title + `</a></h4>
-                    <p>` + text.user + `</p>
+                    <h3>` + text.title + `</h3>
+                    <p class="p1">` + text.user + `</p>
                 </div>
-            </div>
+            </a>                  
         </div>`;
     });
     $("#articles").html(articles);
