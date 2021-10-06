@@ -150,6 +150,12 @@ def edit_article(request, id):
     else:
         return redirect('homepage')
 
+@login_required(login_url='login')
+def delete_article(request, id):
+    article = get_object_or_404(Article, id = id)
+    article.delete()
+    return redirect('homepage')
+
 @login_required()
 def cargar_articulo(request):
     mensajes = []

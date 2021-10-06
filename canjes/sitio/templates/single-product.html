@@ -18,12 +18,26 @@
 						<div class="single-prd-item">
 							<img class="img-fluid" src="{{article.image_one.url}}" alt="">
 						</div>
-						<!-- <div class="single-prd-item">
-							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-						</div>
-						<div class="single-prd-item">
-							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-						</div> -->
+						{% if article.image_two %}
+							<div class="single-prd-item">
+								<img class="img-fluid" src="{{article.image_two.url}}" alt="">
+							</div>
+						{% endif %}
+						{% if article.image_three %}
+							<div class="single-prd-item">
+								<img class="img-fluid" src="{{article.image_three.url}}" alt="">
+							</div>
+						{% endif %}
+						{% if article.image_four %}
+							<div class="single-prd-item">
+								<img class="img-fluid" src="{{article.image_four.url}}" alt="">
+							</div>
+						{% endif %}
+						{% if article.image_five %}
+							<div class="single-prd-item">
+								<img class="img-fluid" src="{{article.image_five.url}}" alt="">
+							</div>
+						{% endif %} 
 					</div>
 				</div>
 				<div class="col-lg-5 offset-lg-1">
@@ -44,6 +58,7 @@
                class="reduced items-count" type="button"><i class="ti-angle-right"></i></button-->
 							{% if article.user == user %}
 								<a class="button primary-btn" href="/articulo/edit/{{article.id}}">Editar</a>
+								<a class="button primary-btn" href="/articulo/delete/{{article.id}}">Elminar</a>
 							{% else %}
 								<a class="button primary-btn" href="/iniciar_canje/{{article.id}}">Canjear</a> 
 							{% endif %}
