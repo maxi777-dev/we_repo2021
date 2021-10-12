@@ -3,28 +3,22 @@
 {% block nombre_seccion %}Mis canjes{% endblock %}
 
 {% block contenido %}
-<style>
-    .bot{
-      border: 0;
-      background: none;
-      color:white;
-      display: block;
-      margin: 20px auto;
-      text-align: center;
-      border: 2px solid rgb(52, 147, 224);
-      padding: 14px 40px;
-      width: 300px;
-      outline: none;
-      border-radius: 24px;
-      transition: 0.25s;
-      cursor: pointer;
-    }
-    .bot:hover{
-        background:rgb(52, 147, 224);
-    }
-</style>
+
 <form class="navbar-form navbar-center" role="search">   
     <h1>Mis Canjes</h1>
 </form>
 
+<section class="section-margin calc-60px">
+    <div class="container">
+      <div class="row">
+        {% for canje in canjes %}
+            <h2>{{ canje.title1 }}</h2>
+            <p>{{ canje.title2 }}</p>
+            <p>{{ canje.title3 }}</p>
+        {% empty %}
+          <p>No tienes canjes</p>
+        {% endfor %}
+      </div>
+    </div>
+</section>
 {% endblock %}
