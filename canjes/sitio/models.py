@@ -89,3 +89,8 @@ class Canje(models.Model):
     user_creator = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE, related_name='creator')
     user_assignee = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE, related_name='assignee')
     state = models.IntegerField(default = 0, null = False)
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE)
+    is_readed = models.BooleanField()
+    context = models.CharField(max_length = 255, null = False)

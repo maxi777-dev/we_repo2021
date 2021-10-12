@@ -114,6 +114,7 @@
                   <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrate</a></li>
                 {% endif %}
                 <li class="nav-item"><a class="nav-link" href="#profile">{{user}}</a></li>
+                <span id="notifications_count" href="{% url 'notifications' %}" class="nav-shop__circle">0</span>
             </ul>
           </div>
         </div>
@@ -191,6 +192,5 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="{% static 'vendors/mail-script.js' %}"></script>
 	<script src="{% static 'js/main.js' %}"></script>
 	{% block jquery %}{% endblock %}
-	
 </body>
 </html>

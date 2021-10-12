@@ -113,4 +113,20 @@ $(function() {
   
 });
 
+function actualizar_notificaciones() {
+  fetch('/notifications/0')
+    .then(response => response.json())
+    .then(data => actualizar_cantidades_json(data));
+  setTimeout(actualizar_notificaciones, 2000);
+}
 
+function actualizar_cantidades_json(data) {
+  var count = data['count']
+  var notifications = data['notifications']
+  console.log(count)
+  if (count != 0){
+    $("#notifications_count").html(count);
+  }
+}
+
+setTimeout(actualizar_notificaciones, 2000);

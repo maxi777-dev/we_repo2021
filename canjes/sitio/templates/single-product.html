@@ -77,14 +77,16 @@
 				<li class="nav-item">
 					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Descripcion</a>
 				</li>
-				<li class="nav-item">
+				<!--li class="nav-item">
 					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
 					 aria-selected="false">Especificaciones</a>
-				</li>
+				</li-->
+				{% if user.is_authenticated %}  
 				<li class="nav-item">
 					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
 					 aria-selected="false">Comentarios</a>
 				</li>
+				{% endif %}
 				<!--li class="nav-item">
 					<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
 					 aria-selected="false">Reviews</a>
@@ -94,7 +96,7 @@
 				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 					<p>{{article.description}}</p>
 				</div>
-				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+				<!--div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 					<div class="table-responsive">
 						<table class="table">
 							<tbody>
@@ -165,77 +167,79 @@
 							</tbody>
 						</table>
 					</div>
-				</div>
-				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="comment_list">
-								{% for comment in comments %}
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-1.png" alt="">
+				</div-->
+				{% if user.is_authenticated %}  
+					<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="comment_list">
+									{% for comment in comments %}
+									<div class="review_item">
+										<div class="media">
+											<div class="d-flex">
+												<img src="img/product/review-1.png" alt="">
+											</div>
+											<div class="media-body">
+												<h4>{{ comment.user }}</h4>
+												<h5>{{ comment.date_created }}</h5>
+											</div>
 										</div>
-										<div class="media-body">
-											<h4>{{ comment.user }}</h4>
-											<h5>{{ comment.date_created }}</h5>
-										</div>
+										<p>{{ comment.comment }}</p>
 									</div>
-									<p>{{ comment.comment }}</p>
+									{% endfor %}
+									<!--div class="review_item reply">
+										<div class="media">
+											<div class="d-flex">
+												<img src="img/product/review-2.png" alt="">
+											</div>
+											<div class="media-body">
+												<h4>Blake Ruiz</h4>
+												<h5>12th Feb, 2018 at 05:56 pm</h5>
+												<a class="reply_btn" href="#">Reply</a>
+											</div>
+										</div>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+											dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+											commodo</p>
+									</div>
+									<div class="review_item">
+										<div class="media">
+											<div class="d-flex">
+												<img src="img/product/review-3.png" alt="">
+											</div>
+											<div class="media-body">
+												<h4>Blake Ruiz</h4>
+												<h5>12th Feb, 2018 at 05:56 pm</h5>
+												<a class="reply_btn" href="#">Reply</a>
+											</div>
+										</div>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+											dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+											commodo</p>
+									</div-->
 								</div>
-								{% endfor %}
-								<!--div class="review_item reply">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-2.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<h5>12th Feb, 2018 at 05:56 pm</h5>
-											<a class="reply_btn" href="#">Reply</a>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-3.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<h5>12th Feb, 2018 at 05:56 pm</h5>
-											<a class="reply_btn" href="#">Reply</a>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div-->
 							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="review_box">
-								<h4>Deja tu comentario</h4>
-								<form class="row contact_form" action="/comment/{{ article.pk }}" method="post" id="contactForm" novalidate="novalidate">
-									
-									{% csrf_token %}
+							<div class="col-lg-6">
+								<div class="review_box">
+									<h4>Deja tu comentario</h4>
+									<form class="row contact_form" action="/comment/{{ article.pk }}" method="post" id="contactForm" novalidate="novalidate">
+										
+										{% csrf_token %}
 
-									<div class="col-md-12">
-										<div class="form-group">
-											<textarea class="form-control" name="comment" id="id_comment" placeholder="Deje su comentario aquí"></textarea>
+										<div class="col-md-12">
+											<div class="form-group">
+												<textarea class="form-control" name="comment" id="id_comment" placeholder="Deje su comentario aquí"></textarea>
+											</div>
 										</div>
-									</div>
-									<div class="col-md-12 text-right">
-										<button type="submit" value="submit" class="btn primary-btn">Enviar</button>
-									</div>
-								</form>
+										<div class="col-md-12 text-right">
+											<button type="submit" value="submit" class="btn primary-btn">Enviar</button>
+										</div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				{% endif %}
 				<div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
 					<div class="row">
 						<div class="col-lg-6">

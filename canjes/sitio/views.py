@@ -227,12 +227,14 @@ def comment(request, id):
     if request.method == 'POST':
         article = Article.objects.get(pk=id)
         comment = request.POST['comment']
-        Comment.objects.create(
-            comment=comment, 
-            user=request.user,
-            article=article,
-        )
+        if len(comment) < 254:
+            Comment.objects.create(
+                comment=comment, 
+                user=request.user,
+                article=article,
+            )
     return redirect('detalle_articulo', id)
+
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def iniciar_canje(request, id_article):
@@ -240,20 +242,26 @@ def iniciar_canje(request, id_article):
         articles = request.POST.getlist('articles')
         own_articles = request.POST.getlist('own_articles')
         comment =  request.POST['comment']
-        new_canje = Canje()
-        new_canje.save()
-        article_id = 0
-        for article in articles:
-            article_id = article.split(' - ')[0]
-            new_canje.articles_assignee.add(article_id)
-        for article in own_articles:
-            article_id = article.split(' - ')[0]
-            new_canje.articles_creator.add(article_id)
-        user_assignee = Article.objects.get(pk=article_id).user
-        new_canje.comment = comment
-        new_canje.user_creator = request.user
-        new_canje.user_assignee = user_assignee
-        new_canje.save()
+        if len(comment) < 254:
+            new_canje = Canje()
+            new_canje.save()
+            article_id = 0
+            for article in articles:
+                article_id = article.split(' - ')[0]
+                new_canje.articles_assignee.add(article_id)
+            user_assignee = Article.objects.get(pk=article_id).user
+            for article in own_articles:
+                article_id = article.split(' - ')[0]
+                new_canje.articles_creator.add(article_id)
+            new_canje.comment = comment
+            new_canje.user_creator = request.user
+            new_canje.user_assignee = user_assignee
+            new_canje.save()
+            Notification.objects.create(
+                user = user_assignee,
+                is_readed = False,
+                context = f"Tienes un canje pendiente de {request.user}. ¿Deseas aceptarlo?"
+            )
     else:
         if id_article == '0':
             pass
@@ -283,6 +291,22 @@ def categories(request):
         sender.append(content)
     return render(request, 'categories.html', {'categories': categories, 'articles': sender})
 
+def notifications(request, id):
+    if request.method == "GET" and request.user.is_authenticated == True:
+        if id == '0':
+            notifications = Notification.objects.filter(user=request.user).filter(is_readed=False)
+            notifications_list = []
+            content = {}
+            for notification in notifications:
+                content = {
+                    'notif': notification.context,
+                    'notif_id': notification.id,
+                }
+                notifications_list.append(content)
+            return JsonResponse({'notifications': notifications_list, 'count': len(notifications_list)}, safe=False)
+        else:
+            Notification.objects.filter(pk=id).update(is_readed=True)
+    return JsonResponse({'notifications': list([]), 'count': 0}, safe=False)
 
 class verificationview(View):
     def get(self, request, uidb64, token):
