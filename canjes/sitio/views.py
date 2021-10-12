@@ -322,12 +322,12 @@ def mis_canjes(request):
     sender = []
     for canje in canjes:
         content = {
-            'title1': canje.user_creator,
+            'title1': canje.state,
             'title2': canje.user_assignee,
-            'title3': canje.date_created
+            'title3': canje.date_created,
+            'title4': canje.id
         }
         sender.append(content)
-    print(sender)
     return render(request, 'mis_canjes.html', {'canjes': sender})
 
 def categories(request):
