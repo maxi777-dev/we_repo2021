@@ -14,7 +14,7 @@
         {% for notification in notifications %}
             <p>{{ notification.notif_id }}</p>
             <h3>{{ notification.notif }}</h3>
-            <button href="{{ notification.link }}">Ver más</button>
+            <a class="button primary-btn" href="{{ notification.link }}">Ver más</a>
         {% empty %}
           <p>No tienes notificaciones</p>
         {% endfor %}

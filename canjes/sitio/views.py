@@ -123,7 +123,6 @@ def crear_usuario(request): #Registro de nuevo usuario
 
 @login_required(login_url='login')
 def mis_notifications(request):
-    #filtrar notificaciones
     notifications = Notification.objects.all().filter(user = request.user)
     content = {}
     sender = []
@@ -135,7 +134,6 @@ def mis_notifications(request):
             'link': notification.link
         }
         sender.append(content)
-    print(sender)
     return render(request, 'notifications.html', {'notifications': sender})
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
@@ -230,7 +228,7 @@ def get_articles_by_category(request, id):
         return JsonResponse(sender, safe=False)
     pass
 
-@login_required()
+@login_required(login_url='login')
 def comment(request, id):
     if request.method == 'POST':
         article = Article.objects.get(pk=id)
@@ -269,44 +267,68 @@ def iniciar_canje(request, id_article):
                 user = user_assignee,
                 is_readed = False,
                 context = f"Tienes un canje pendiente de {request.user}. ¿Deseas aceptarlo?",
-                link = f'canjes/{new_canje.id}'
+                link = f'/canjes/{new_canje.id}'
             )
     else:
         if id_article == '0':
-            pass
+            return render('mis_canjes')
         else:
             article_user = Article.objects.get(pk=id_article).user
             articles = Article.objects.filter(user=article_user)
             own_articles = Article.objects.filter(user=request.user)
             return render(request, 'iniciar_canje.html', {'articles': articles, 'own_articles': own_articles, 'user': article_user})
-    return render(request, 'mis_canjes.html')
+    return mis_canjes(request)
 
 @login_required(login_url='login')
 def ver_canje(request, id):
-    canje = Canje.objects.get(pk=id)
-    art_creator = []
-    context = {}
-    for articles_creator in canje.articles_creator.all():
-        context = {
-            'title': articles_creator.title,
-            'link': '/articulo/' + str(article.id),
-            'category': articles_creator.category.title
-        }
-        art_creator.append(context)
-    context = {}
-    art_assignee = []
-    for articles_assignee in canje.articles_assignee.all():
-        context = {
-            'title': articles_assignee.title,
-            'link': '/articulo/' + str(article.id),
-            'category': articles_assignee.category.title
-        }
-        art_assignee.append(context)
-    return render(request, 'canjes.html', {'art_creator': art_creator, 'art_assignee': art_assignee})
+    if request.method == "GET":
+        canje = Canje.objects.get(pk=id)
+        user_creator = canje.user_creator
+        user_assignee = canje.user_assignee
+        if request.user != user_creator and request.user != user_assignee:
+            return redirect('homepage')
+        else:
+            art_creator = []
+            context = {}
+            for articles_creator in canje.articles_creator.all():
+                context = {
+                    'title': articles_creator.title,
+                    'link': '/articulo/' + str(articles_creator.id),
+                    'category': articles_creator.category.title
+                }
+                art_creator.append(context)
+            context = {}
+            art_assignee = []
+            for articles_assignee in canje.articles_assignee.all():
+                context = {
+                    'title': articles_assignee.title,
+                    'link': '/articulo/' + str(articles_assignee.id),
+                    'category': articles_assignee.category.title
+                }
+                art_assignee.append(context)
+            return render(request, 'canjes.html', {'art_creator': art_creator, 'art_assignee': art_assignee, 'user_creator': user_creator, 'user_assignee': user_assignee, 'id': id})
+    elif request.method == "POST":
+        canje = Canje.objects.all().filter(pk=id)
+        if request.POST.get('acept_button'):
+            canje.update(state=1)
+        else:
+            canje.update(state=2)
+        return redirect('homepage')
 
-@login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
+@login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en especifico
 def mis_canjes(request):
-    return render(request, 'mis_canjes.html')
+    canjes = Canje.objects.all().filter(user_creator = request.user)
+    content = {}
+    sender = []
+    for canje in canjes:
+        content = {
+            'title1': canje.user_creator,
+            'title2': canje.user_assignee,
+            'title3': canje.date_created
+        }
+        sender.append(content)
+    print(sender)
+    return render(request, 'mis_canjes.html', {'canjes': sender})
 
 def categories(request):
     categories = Category.objects.exclude(parent=None)

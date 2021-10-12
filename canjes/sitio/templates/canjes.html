@@ -4,7 +4,7 @@
 
 {% load static %}
 
-{% block nombre_seccion %}Iniciar canje{% endblock %}
+{% block nombre_seccion %}Canje{{id}}{% endblock %}
 
 {% block jquery %}
 	<script src="{% static 'js/selections.js' %}"></script>
@@ -16,11 +16,11 @@
 	<section class="login_box_area section-margin">
 		<div class="container">
 			<div class="section-intro pb-60px">
-				<h2><span class="section-intro__style">Iniciar</span> Canje</h2>
+				<h2><span class="section-intro__style"></span>Canje</h2>
 			</div>
 			<div class="row">
 				<div class="col-lg-6">
-					<p>Artículos de {{user}}</p>
+					<p>Artículos de {{user_creator}}</p>
 					<div class="card" style="width: 18rem;">
 						<div class="list-group">
 							{% for article in art_creator %}
@@ -30,7 +30,7 @@
 					</div>					
 				</div>
 				<div class="col-lg-6">
-					<p>Tus artículos</p>
+					<p>Artículos de {{user_assignee}}</p>
 					<div class="card" style="width: 18rem;">
 						<div class="list-group">
 							{% for article in art_assignee %}
@@ -39,14 +39,18 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6 form-group">
-					<textarea name="comment" cols="40" rows="10" required="" class="form-control" placeholder="Coloque aqui un comentario para el remitente" id="id_comment"></textarea>
-				</div>
-				<div class="col-md-6 text-right">
-					<button type="submit" value="submit" class="button primary-btn">Canjear</button>
-				</div>
-			</div>	
-			<p>Presiona CTRL para seleccionar más de un artículo.</p>	
+				{% if user == user_assignee %}
+					<form class="row canjear" action="{{id}}" method="POST" id="accept_or_reject">
+						{% csrf_token %}
+						<div class="col-md-6 text-right">
+							<button type="submit" value="submit" id="acept_button" name="acept_button" class="button primary-btn">Aceptar</button>
+						</div>
+						<div class="col-md-6 text-right">
+							<button type="submit" value="submit" id="reject_button" name="reject_button" class="button deny-btn">Rechazar</button>
+						</div>
+					</form>
+				{% endif %}
+			</div>
 		</div>
 	</section>
 	<!--================End Login Box Area =================-->
