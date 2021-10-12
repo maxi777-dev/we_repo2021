@@ -42,6 +42,7 @@ urlpatterns = [
     path('notifications/<id>', views.notifications, name='notifications'),
     path('iniciar_canje/<id_article>', views.iniciar_canje, name='iniciar_canje'),
     path('notifications/', views.mis_notifications, name='mis_notifications'),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
