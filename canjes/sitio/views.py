@@ -237,13 +237,33 @@ def comment(request, id):
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def iniciar_canje(request, id_article):
     if request.method == 'POST':
-        pass
+        articles = request.POST.getlist('articles')
+        own_articles = request.POST.getlist('own_articles')
+        comment =  request.POST['comment']
+        new_canje = Canje()
+        new_canje.save()
+        article_id = 0
+        for article in articles:
+            article_id = article.split(' - ')[0]
+            new_canje.articles_assignee.add(article_id)
+        for article in own_articles:
+            article_id = article.split(' - ')[0]
+            new_canje.articles_creator.add(article_id)
+        user_assignee = Article.objects.get(pk=article_id).user
+        new_canje.comment = comment
+        new_canje.user_creator = request.user
+        new_canje.user_assignee = user_assignee
+        new_canje.save()
     else:
-        article_user = Article.objects.get(pk=id_article).user
-        article_user_pk = article_user.pk
-        articles = Article.objects.filter(user=article_user)
-        own_articles = Article.objects.filter(user=request.user)
-        return render(request, 'iniciar_canje.html', {'articles': articles, 'own_articles': own_articles, 'user': article_user})
+        if id_article == '0':
+            pass
+        else:
+            article_user = Article.objects.get(pk=id_article).user
+            articles = Article.objects.filter(user=article_user)
+            own_articles = Article.objects.filter(user=request.user)
+            return render(request, 'iniciar_canje.html', {'articles': articles, 'own_articles': own_articles, 'user': article_user})
+    return render(request, 'mis_canjes.html')
+
 
 def categories(request):
     categories = Category.objects.exclude(parent=None)
