@@ -187,14 +187,6 @@ def cargar_articulo(request):
     context = {'form': form, 'messages': mensajes} 
     return render(request, 'cargar_articulo.html', context)
 
-@login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
-def mis_canjes(request):
-    return render(request, 'mis_canjes.html')
-
-@login_required()
-def cargar_canje(request):
-    return render(request, 'cargar_canje.html')
-
 @login_required(login_url='homepage') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def logout(request):
     auth.logout(request)
@@ -276,7 +268,8 @@ def iniciar_canje(request, id_article):
             Notification.objects.create(
                 user = user_assignee,
                 is_readed = False,
-                context = f"Tienes un canje pendiente de {request.user}. ¿Deseas aceptarlo?"
+                context = f"Tienes un canje pendiente de {request.user}. ¿Deseas aceptarlo?",
+                link = f'canjes/{new_canje.id}'
             )
     else:
         if id_article == '0':
@@ -288,6 +281,32 @@ def iniciar_canje(request, id_article):
             return render(request, 'iniciar_canje.html', {'articles': articles, 'own_articles': own_articles, 'user': article_user})
     return render(request, 'mis_canjes.html')
 
+@login_required(login_url='login')
+def ver_canje(request, id):
+    canje = Canje.objects.get(pk=id)
+    art_creator = []
+    context = {}
+    for articles_creator in canje.articles_creator.all():
+        context = {
+            'title': articles_creator.title,
+            'link': '/articulo/' + str(article.id),
+            'category': articles_creator.category.title
+        }
+        art_creator.append(context)
+    context = {}
+    art_assignee = []
+    for articles_assignee in canje.articles_assignee.all():
+        context = {
+            'title': articles_assignee.title,
+            'link': '/articulo/' + str(article.id),
+            'category': articles_assignee.category.title
+        }
+        art_assignee.append(context)
+    return render(request, 'canjes.html', {'art_creator': art_creator, 'art_assignee': art_assignee})
+
+@login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
+def mis_canjes(request):
+    return render(request, 'mis_canjes.html')
 
 def categories(request):
     categories = Category.objects.exclude(parent=None)

@@ -27,6 +27,8 @@ urlpatterns = [
     path('createuser/', views.crear_usuario, name='register'),
     path('articulos/', views.mis_articulos, name='mis_articulos'),
     path('createarticulo/', views.cargar_articulo, name='cargar_articulo'),
+    path('miscanjes/',views.mis_canjes, name='mis_canjes'),
+    path('canjes/<id>', views.ver_canje, name='ver_canje'),
     #path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='homepage'), # HOMEPAGE,
     path('articulo/<id>', views.article, name='detalle_articulo'),
@@ -39,7 +41,6 @@ urlpatterns = [
     path('comment/<id>', views.comment, name='comment'),
     path('notifications/<id>', views.notifications, name='notifications'),
     path('iniciar_canje/<id_article>', views.iniciar_canje, name='iniciar_canje'),
-    path('canjes/<id>', views.iniciar_canje, name='ver_canje'),
     path('notifications/', views.mis_notifications, name='mis_notifications'),
 ]
 

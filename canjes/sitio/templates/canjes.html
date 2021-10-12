@@ -1,0 +1,54 @@
+
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block nombre_seccion %}Iniciar canje{% endblock %}
+
+{% block jquery %}
+	<script src="{% static 'js/selections.js' %}"></script>
+{% endblock %}
+
+{% block contenido %}
+
+  <!--================Login Box Area =================-->
+	<section class="login_box_area section-margin">
+		<div class="container">
+			<div class="section-intro pb-60px">
+				<h2><span class="section-intro__style">Iniciar</span> Canje</h2>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<p>Artículos de {{user}}</p>
+					<div class="card" style="width: 18rem;">
+						<div class="list-group">
+							{% for article in art_creator %}
+								<a class="list-group-item list-group-item-action" href="{{article.link}}" id="{{article.id}}" value="false">{{article.title}}</a>
+							{% endfor %}
+						</div>
+					</div>					
+				</div>
+				<div class="col-lg-6">
+					<p>Tus artículos</p>
+					<div class="card" style="width: 18rem;">
+						<div class="list-group">
+							{% for article in art_assignee %}
+								<a class="list-group-item list-group-item-action" href="{{article.link}}" id="{{article.id}}" value="false">{{article.title}}</a>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 form-group">
+					<textarea name="comment" cols="40" rows="10" required="" class="form-control" placeholder="Coloque aqui un comentario para el remitente" id="id_comment"></textarea>
+				</div>
+				<div class="col-md-6 text-right">
+					<button type="submit" value="submit" class="button primary-btn">Canjear</button>
+				</div>
+			</div>	
+			<p>Presiona CTRL para seleccionar más de un artículo.</p>	
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+	{% endblock %}
