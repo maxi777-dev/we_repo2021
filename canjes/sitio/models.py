@@ -94,3 +94,4 @@ class Notification(models.Model):
     user = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE)
     is_readed = models.BooleanField()
     context = models.CharField(max_length = 255, null = False)
+    link = models.CharField(max_length = 255, null = False)

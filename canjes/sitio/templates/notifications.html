@@ -11,13 +11,12 @@
         <div class="section-intro pb-60px">
             <h2><span class="section-intro__style">Mis</span> Notificaciones</h2>
         </div>
-        {% for article in articles %}                 
-            <a href="{{ article.link }}">
-                <p>{{ article.category.title }}</p>
-                <h3>{{ article.title }}</h3>     
-            </a>                  
+        {% for notification in notifications %}
+            <p>{{ notification.notif_id }}</p>
+            <h3>{{ notification.notif }}</h3>
+            <button href="{{ notification.link }}">Ver más</button>
         {% empty %}
-          <p>No hay artículos aún</p>
+          <p>No tienes notificaciones</p>
         {% endfor %}
     </div>
 </section>

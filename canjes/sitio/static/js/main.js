@@ -125,7 +125,7 @@ function actualizar_cantidades_json(data) {
   var notifications = data['notifications']
   console.log(count)
   if (count != 0){
-    $("#notifications_count").html(count);
+    $("#notifications_count").html('<i class="fa fa-bell" aria-hidden="true">' + count + '</i>');
   }
 }
 
