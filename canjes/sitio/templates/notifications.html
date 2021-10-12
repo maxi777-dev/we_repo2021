@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block nombre_seccion %}Notifications{% endblock %}
+
+{% block contenido %}
+
+<!-- Recorrer lista de notificaciones, y mostrarlas todas junto con un boton de aceptar o rechazar -->
+
+<section class="section-margin calc-60px">
+    <div class="container">
+        <div class="section-intro pb-60px">
+            <h2><span class="section-intro__style">Mis</span> Notificaciones</h2>
+        </div>
+        {% for article in articles %}                 
+            <a href="{{ article.link }}">
+                <p>{{ article.category.title }}</p>
+                <h3>{{ article.title }}</h3>     
+            </a>                  
+        {% empty %}
+          <p>No hay artículos aún</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

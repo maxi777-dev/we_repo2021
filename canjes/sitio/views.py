@@ -121,6 +121,22 @@ def crear_usuario(request): #Registro de nuevo usuario
     else:
         return redirect('homepage')
 
+@login_required(login_url='login')
+def mis_notifications(request):
+    #filtrar notificaciones
+    articles = Article.objects.all().filter(user = request.user)
+    content = {}
+    sender = []
+    for article in articles:
+        content = {
+            'title': article.title,
+            'date_created': article.date_created,
+            'link': '/articulo/' + str(article.id),
+            'edit_article': '/articulo/edit/' + str(article.id),
+            'image': article.image_one.url,
+        }
+        sender.append(content)
+    return render(request, 'notifications.html', {'articles': sender})
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en espesifico
 def mis_articulos(request):
