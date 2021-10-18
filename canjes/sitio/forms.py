@@ -6,9 +6,9 @@ from .models import *
 
 class FormCreateUser(UserCreationForm):
 
-    username = forms.TextField(attrs={'placeholder': 'Nombre de usuario'})
-    first_name = forms.TextField(attrs={'placeholder': 'Nombre'})
-    last_name = forms.TextField(attrs={'placeholder': 'Apellido'})
+    username = forms.TextInput(attrs={'placeholder': 'Nombre de usuario'})
+    first_name = forms.TextInput(attrs={'placeholder': 'Nombre'})
+    last_name = forms.TextInput(attrs={'placeholder': 'Apellido'})
     email = forms.EmailField(max_length=100, attrs={'placeholder': 'Email'})       
     password1 = forms.CharField(
         label='Contraseña',
