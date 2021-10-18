@@ -6,14 +6,15 @@ from .models import *
 
 class FormCreateUser(UserCreationForm):
 
-    email = forms.EmailField(max_length=100)
-    
+    username = forms.TextField(attrs={'placeholder': 'Nombre de usuario'})
+    first_name = forms.TextField(attrs={'placeholder': 'Nombre'})
+    last_name = forms.TextField(attrs={'placeholder': 'Apellido'})
+    email = forms.EmailField(max_length=100, attrs={'placeholder': 'Email'})       
     password1 = forms.CharField(
         label='Contraseña',
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
     )
-
     password2 = forms.CharField(
         label='Confirmar contraseña',
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
