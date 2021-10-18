@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from os import name
-from django.contrib import admin
-from django.urls import path
-from django.views.generic.base import TemplateView
-from sitio import views
+
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, include
+from django.views.generic.base import TemplateView
+from sitio import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,6 +44,7 @@ urlpatterns = [
     path('notifications/<id>', views.notifications, name='notifications'),
     path('iniciar_canje/<id_article>', views.iniciar_canje, name='iniciar_canje'),
     path('notifications/', views.mis_notifications, name='mis_notifications'),
+    path('search/', include('haystack.urls')),
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 ]
 
