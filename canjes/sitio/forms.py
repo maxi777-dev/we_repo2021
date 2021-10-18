@@ -6,10 +6,7 @@ from .models import *
 
 class FormCreateUser(UserCreationForm):
 
-    username = forms.TextInput(attrs={'placeholder': 'Nombre de usuario'})
-    first_name = forms.TextInput(attrs={'placeholder': 'Nombre'})
-    last_name = forms.TextInput(attrs={'placeholder': 'Apellido'})
-    email = forms.EmailField(max_length=100, attrs={'placeholder': 'Email'})       
+    email = forms.EmailField(max_length=100)       
     password1 = forms.CharField(
         label='Contraseña',
         strip=False,
@@ -89,6 +86,10 @@ class FormCreateUser(UserCreationForm):
     
     def __init__(self,*args,**kwargs):
         super(FormCreateUser, self).__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs['placeholder'] = "Nombre de usuario"
+        self.fields['first_name'].widget.attrs['placeholder'] = "Nombre"
+        self.fields['last_name'].widget.attrs['placeholder'] = "Apellido"
 
         self.fields['password1'].widget.attrs['placeholder'] = "Contraseña"
         self.fields['password1'].label = ''      
