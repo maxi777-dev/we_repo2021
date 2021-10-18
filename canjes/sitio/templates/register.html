@@ -23,27 +23,27 @@
 						<h3>Crear una cuenta</h3>
 						<form class="row login_form" action="." id="register_form" method="POST">
 							{% csrf_token %}						
-							<div class="col-md-12 form-group">
-								<input type="username" class="form-control" name="username" placeholder="Nombre de Usuario" maxlength="40" autofocus required id="username">
+							<div class="col-md-12 form-group">								
+								{{form.username}}
 								<div style="color: rgb(150, 18, 18);">{{form.errors.username}}</div>							
 							</div>
-							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="first_name" placeholder="Nombre" maxlength="40" required id="first_name">
+							<div class="col-md-12 form-group">								
+								{{form.first_name}}
 								<div style="color: rgb(150, 18, 18);">{{form.errors.first_name}}</div>
 							</div>
-							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" name="last_name" placeholder="Apellido" maxlength="40" required id="last_name">
+							<div class="col-md-12 form-group">					
+								{{form.last_name}}
 								<div style="color: rgb(150, 18, 18);">{{form.errors.last_name}}</div>
 							</div>
-							<div class="col-md-12 form-group">
-								<input type="email" class="form-control" name="email" placeholder="E-Mail" maxlength="125" required id="email">
+							<div class="col-md-12 form-group">								
+								{{form.email}}
 								<div style="color: rgb(150, 18, 18);">{{form.errors.email}}</div>
 							</div>							
-							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" name="password1" autocomplete="new-password" placeholder="Contraseña" required id="password1">
+							<div class="col-md-12 form-group">													
+								{{form.password1}}
 							</div>
-							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" name="password2" autocomplete="new-password" placeholder="Confirmar contraseña" required id="password2">
+							<div class="col-md-12 form-group">								
+								{{form.password2}}
 								<div style="color: rgb(150, 18, 18);">{{form.errors.password2}}</div>	
 							</div>							 			
 							<div class="col-md-12 form-group">

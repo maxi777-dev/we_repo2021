@@ -90,7 +90,7 @@ class FormCreateUser(UserCreationForm):
         self.fields['username'].widget.attrs['placeholder'] = "Nombre de usuario"
         self.fields['first_name'].widget.attrs['placeholder'] = "Nombre"
         self.fields['last_name'].widget.attrs['placeholder'] = "Apellido"
-
+        self.fields['email'].widget.attrs['placeholder'] = "E-Mail"
         self.fields['password1'].widget.attrs['placeholder'] = "Contraseña"
         self.fields['password1'].label = ''      
         self.fields['password1'].help_text = ''        

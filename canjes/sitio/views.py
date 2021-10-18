@@ -113,7 +113,10 @@ def crear_usuario(request): #Registro de nuevo usuario
 
                     return redirect('login')
                 else:
-                    mensajes.append('El mail ingresado ya existe')    
+                    mensajes.append('El mail ingresado ya existe')
+                    form = FormCreateUser(data=request.POST)
+            else:
+                form = FormCreateUser(data=request.POST)
         else:
             form = FormCreateUser()
         context = {'form': form, 'messages': mensajes}   
