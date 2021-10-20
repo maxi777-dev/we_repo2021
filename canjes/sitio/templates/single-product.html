@@ -13,30 +13,43 @@
 
 {% block contenido %}
 <style>
-	.img-fluid{
-		height: 400px; 
-  		width: 200px;
-	}
 	#boton_1 {
 		float: right;
-		position: relative; right: 500px;
+		margin-top: 20px;
+		position: relative; right: 270px;
 	}
 	#boton_2 {
 		float: left;
-		position: relative; left: 500px;
+		margin-top: 20px;
+		position: relative; left: 280px;
 	}
+    .wrapper2 img{
+      height: 350px; 
+      width: 400px;
+	  border-radius: 10px;
+    }
+	.wrapper2{
+      border-radius: 10px;
+      background: #384aeb;
+	  padding: 0.5em;
+	  margin-right: 55px;
+	  margin-left: 70px;		
+    }
 </style>
 <!--================Single Product Area =================-->
 	<div class="product_image_area">
 		<div class="container">
 			<div class="row s_product_inner">
-				<div class="col-lg-6">
-					<button onclick="anterior()" id="boton_1">Anterior</button>
-					<button onclick="siguiente()" id="boton_2">Siguiente</button>									
-					<div class="single-prd-item" name="Diapositiva">
-						<img name="Diapositiva" src="{{article.image_one.url}}" alt="">
+				<div class="col-lg-6">									
+					<div class="single-prd-item">
+						<div class="wrapper2">                    
+							<img name="Diapositiva" src="{{article.image_one.url}}" alt="">
+						</div>
+						<button class="button primary-btn" onclick="anterior()" id="boton_1"><i class="fas fa-angle-double-left"></i></button>
+						<button class="button primary-btn" onclick="siguiente()" id="boton_2"><i class="fas fa-angle-double-right"></i></button>
 					</div>
-				</div>
+
+				</div>				
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
 						<h3>{{article.title}}</h3>
