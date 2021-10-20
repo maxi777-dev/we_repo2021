@@ -20,9 +20,18 @@
         {% if query %}
             <h3>Resultados:</h3>
 
-            {% for result in page.object_list %}
-                <p>{{ result.titulo }}, {{ result.fecha }}</p>
-            {% empty %}
+            {% for article in articles|slice:":9" %}
+                <div class="wrapper">                    
+                  <a href="{{ article.link }}">
+                    <img src="{{ article.image }}">
+                    <div class="content">
+                      <p>{{ article.category.title }}</p>
+                      <h3>{{ article.title }}</h3>
+                      <p class="p1">{{ article.user }}</p>
+                    </div>
+                  </a>                  
+                </div> 
+              {% empty %}
                 <p>No se encontraron articulos.</p>
             {% endfor %}
 

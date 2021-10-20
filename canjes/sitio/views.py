@@ -387,3 +387,6 @@ class verificationview(View):
         except Exception as ex:
             pass
             return redirect('login')
+
+def robots_txt(request): #El robot.txt
+    return render(request, "robots.txt", {})
