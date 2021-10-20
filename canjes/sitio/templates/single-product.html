@@ -6,9 +6,7 @@
 
 {% block jquery %}
 	<script src="{% static 'js/pictures.js' %}"></script>
-	<script type="text/javascript">
-		refresh("{{article.pk}}")
-	</script>
+	<script type="text/javascript">refresh("{{article.pk}}")</script>
 {% endblock %}
 
 {% block contenido %}
@@ -56,7 +54,6 @@
 						<h2>{{article.date_created}}</h2>
 						<ul class="list">
 							<li><a class="active" href="#"><span>Category:</span>{{ article.category.title }}</a></li>
-							<!--li><a href="#"><span>Availibility</span> : In Stock</a></li-->
 						</ul>
 						<p>{{article.description|slice:":30"}}</p>
 						<div class="product_count">

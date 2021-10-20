@@ -21,6 +21,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 from sitio import views
+from haystack.views import basic_search
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,8 +47,7 @@ urlpatterns = [
     path('iniciar_canje/<id_article>', views.iniciar_canje, name='iniciar_canje'),
     path('notifications/', views.mis_notifications, name='mis_notifications'),
     path('robots.txt', views.robots_txt),
-    path('search/', views.search.as_view(), name='search'),
-    #path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path('search/', basic_search, name='search'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

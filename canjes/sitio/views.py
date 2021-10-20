@@ -408,14 +408,3 @@ class verificationview(View):
 
 def robots_txt(request): #El robot.txt
     return render(request, "robots.txt", {})
-
-class search(SearchView):
-    """My custom search view."""
-
-    def get_queryset(self):
-        queryset = super(search, self).get_queryset()
-        return queryset.filter(pub_date__gte=date(2015, 1, 1))
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(search, self).get_context_data(*args, **kwargs)
-        return context
