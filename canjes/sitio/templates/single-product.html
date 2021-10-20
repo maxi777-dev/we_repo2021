@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block nombre_seccion %}Articulo{% endblock %}
+
+{% block jquery %}
+	<script src="{% static 'js/pictures.js' %}"></script>
+	<script> "refresh({{article.pk}})" </script>
+{% endblock %}
 
 {% block contenido %}
 <style>
@@ -8,36 +15,24 @@
 		height: 400px; 
   		width: 200px;
 	}
+	#boton_1 {
+		float: right;
+		position: relative; right: 500px;
+	}
+	#boton_2 {
+		float: left;
+		position: relative; left: 500px;
+	}
 </style>
 <!--================Single Product Area =================-->
 	<div class="product_image_area">
 		<div class="container">
 			<div class="row s_product_inner">
 				<div class="col-lg-6">
-					<div class="owl-carousel owl-theme s_Product_carousel">
-						<div class="single-prd-item">
-							<img class="img-fluid" src="{{article.image_one.url}}" alt="">
-						</div>
-						{% if article.image_two %}
-							<div class="single-prd-item">
-								<img class="img-fluid" src="{{article.image_two.url}}" alt="">
-							</div>
-						{% endif %}
-						{% if article.image_three %}
-							<div class="single-prd-item">
-								<img class="img-fluid" src="{{article.image_three.url}}" alt="">
-							</div>
-						{% endif %}
-						{% if article.image_four %}
-							<div class="single-prd-item">
-								<img class="img-fluid" src="{{article.image_four.url}}" alt="">
-							</div>
-						{% endif %}
-						{% if article.image_five %}
-							<div class="single-prd-item">
-								<img class="img-fluid" src="{{article.image_five.url}}" alt="">
-							</div>
-						{% endif %} 
+					<button onclick="anterior()" id="boton_1">Anterior</button>
+					<button onclick="siguiente()" id="boton_2">Siguiente</button>									
+					<div class="single-prd-item" name="Diapositiva">
+						<img name="Diapositiva" src="{{article.image_one.url}}" alt="">
 					</div>
 				</div>
 				<div class="col-lg-5 offset-lg-1">
