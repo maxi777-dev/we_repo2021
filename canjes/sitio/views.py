@@ -370,6 +370,23 @@ def notifications(request, id):
             Notification.objects.filter(pk=id).update(is_readed=True)
     return JsonResponse({'notifications': list([]), 'count': 0}, safe=False)
 
+def get_images(request, id):
+    if request.method == "GET":
+        article = Article.objects.get(pk=id)
+        photos = []
+        if article.image_one:
+            photos.append(article.image_one.url)
+        if article.image_two:
+            photos.append(article.image_two.url)
+        if article.image_three:
+            photos.append(article.image_three.url)
+        if article.image_four:
+            photos.append(article.image_four.url)
+        if article.image_five:
+            photos.append(article.image_five.url)        
+        return JsonResponse({'photos': photos}, safe=False)
+    return JsonResponse({'notifications': list([]), 'count': 0}, safe=False)
+
 class verificationview(View):
     def get(self, request, uidb64, token):
         try:

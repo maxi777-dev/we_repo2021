@@ -42,6 +42,7 @@ urlpatterns = [
     path('categorias', views.categories, name='categories'),
     path('comment/<id>', views.comment, name='comment'),
     path('notifications/<id>', views.notifications, name='notifications'),
+    path('get_images/<id>', views.get_images, name='get_images'),
     path('iniciar_canje/<id_article>', views.iniciar_canje, name='iniciar_canje'),
     path('notifications/', views.mis_notifications, name='mis_notifications'),
     path('robots.txt', views.robots_txt),
