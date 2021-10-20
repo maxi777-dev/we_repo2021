@@ -6,7 +6,9 @@
 
 {% block jquery %}
 	<script src="{% static 'js/pictures.js' %}"></script>
-	<script> "refresh({{article.pk}})" </script>
+	<script type="text/javascript">
+		refresh("{{article.pk}}")
+	</script>
 {% endblock %}
 
 {% block contenido %}
