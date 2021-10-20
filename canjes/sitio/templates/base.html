@@ -67,8 +67,9 @@
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
               <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
-			  <li class="nav-item"><a class="nav-link" href="{% url 'categories' %}">Busquedas</a></li>
-              {% if user.is_authenticated %}                
+			        <li class="nav-item"><a class="nav-link" href="{% url 'categories' %}">Categorias</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'search' %}">Busquedas</a></li>
+              {% if user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'mis_articulos' %}">Mis artículos</a></li>
               {% endif %}
               <li class="nav-item"><a class="nav-link" href="{% url 'mis_canjes' %}">Mis canjes</a></li>

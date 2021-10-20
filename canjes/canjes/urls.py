@@ -44,8 +44,8 @@ urlpatterns = [
     path('notifications/<id>', views.notifications, name='notifications'),
     path('iniciar_canje/<id_article>', views.iniciar_canje, name='iniciar_canje'),
     path('notifications/', views.mis_notifications, name='mis_notifications'),
-    path('search/', include('haystack.urls')),
     path('robots.txt', views.robots_txt),
+    path('search/', views.search.as_view(), name='search'),
     #path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 ]
 
