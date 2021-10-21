@@ -81,6 +81,12 @@ class Comment(models.Model):
     comment = models.CharField(max_length = 255, null = False)
     date_created = models.DateTimeField(default=timezone.now)
 
+class Notification(models.Model):
+    user = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE)
+    is_readed = models.BooleanField()
+    context = models.CharField(max_length = 255, null = False)
+    link = models.CharField(max_length = 255, null = False)
+
 class Canje(models.Model):
     articles_creator = models.ManyToManyField(Article, related_name='creator')
     articles_assignee = models.ManyToManyField(Article, related_name='assignee')
@@ -89,9 +95,4 @@ class Canje(models.Model):
     user_creator = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE, related_name='creator')
     user_assignee = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE, related_name='assignee')
     state = models.IntegerField(default = 0, null = False)
-
-class Notification(models.Model):
-    user = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE)
-    is_readed = models.BooleanField()
-    context = models.CharField(max_length = 255, null = False)
-    link = models.CharField(max_length = 255, null = False)
+    notification = models.OneToOneField(Notification, null = True, default = None, on_delete = models.CASCADE)

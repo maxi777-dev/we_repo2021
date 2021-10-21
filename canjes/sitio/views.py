@@ -128,14 +128,13 @@ def crear_usuario(request): #Registro de nuevo usuario
 
 @login_required(login_url='login')
 def mis_notifications(request):
-    notifications = Notification.objects.all().filter(user = request.user)
+    notifications = Notification.objects.all().filter(user = request.user).filter(is_readed = False)
     content = {}
     sender = []
     for notification in notifications:
         content = {
             'notif': notification.context,
             'notif_id': notification.id,
-            'is_readed': notification.is_readed,
             'link': notification.link
         }
         sender.append(content)
@@ -267,13 +266,13 @@ def iniciar_canje(request, id_article):
             new_canje.comment = comment
             new_canje.user_creator = request.user
             new_canje.user_assignee = user_assignee
-            new_canje.save()
-            Notification.objects.create(
+            new_canje.notification = Notification.objects.create(
                 user = user_assignee,
                 is_readed = False,
                 context = f"Tienes un canje pendiente de {request.user}. ¿Deseas aceptarlo?",
                 link = f'/canjes/{new_canje.id}'
             )
+            new_canje.save()
     else:
         if id_article == '0':
             return render('mis_canjes')
@@ -313,14 +312,15 @@ def ver_canje(request, id):
                 art_assignee.append(context)
             return render(request, 'canjes.html', {'art_creator': art_creator, 'art_assignee': art_assignee, 'user_creator': user_creator, 'user_assignee': user_assignee, 'id': id})
     elif request.method == "POST":
+
         canje = Canje.objects.get(pk=id)
+        canje.notification.update(is_readed = True)
+        
+        canje = Canje.objects.all().filter(pk=id)
         if request.POST.get('acept_button'):
             canje.update(state=1)
         else:
             canje.update(state=2)
-            notif = Notification.objects.get(pk=id)
-            notif.is_readed = True
-            notif.save()
         return redirect('homepage')
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en especifico
