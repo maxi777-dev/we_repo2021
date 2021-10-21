@@ -313,13 +313,14 @@ def ver_canje(request, id):
                 art_assignee.append(context)
             return render(request, 'canjes.html', {'art_creator': art_creator, 'art_assignee': art_assignee, 'user_creator': user_creator, 'user_assignee': user_assignee, 'id': id})
     elif request.method == "POST":
-        canje = Canje.objects.all().filter(pk=id)
+        canje = Canje.objects.get(pk=id)
         if request.POST.get('acept_button'):
             canje.update(state=1)
         else:
             canje.update(state=2)
-            notif = Notification.objects.all().filter(pk=id)
-            notif.delete()
+            notif = Notification.objects.get(pk=id)
+            notif.is_readed = True
+            notif.save()
         return redirect('homepage')
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en especifico
