@@ -273,15 +273,16 @@ def iniciar_canje(request, id_article):
                 link = f'/canjes/{new_canje.id}'
             )
             new_canje.save()
+            return mis_canjes(request)
     else:
         if id_article == '0':
-            return render('mis_canjes')
+            return redirect('mis_canjes')
         else:
             article_user = Article.objects.get(pk=id_article).user
             articles = Article.objects.filter(user=article_user)
             own_articles = Article.objects.filter(user=request.user)
             return render(request, 'iniciar_canje.html', {'articles': articles, 'own_articles': own_articles, 'user': article_user})
-    return mis_canjes(request)
+    return redirect('homepage')
 
 @login_required(login_url='login')
 def ver_canje(request, id):
@@ -314,7 +315,7 @@ def ver_canje(request, id):
     elif request.method == "POST":
 
         canje = Canje.objects.get(pk=id)
-        canje.notification.update(is_readed = True)
+        Notification.objects.filter(pk=canje.notification.id).update(is_readed=True)
         
         canje = Canje.objects.all().filter(pk=id)
         if request.POST.get('acept_button'):

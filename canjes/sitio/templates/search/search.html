@@ -26,7 +26,7 @@
             <h3>Resultados:</h3>
 
             {% for result in page.object_list %}
-                <p>{{ result.title }}, {{ result.date_created }}</p>
+                <p>{{ result.title }}, {{ result.date_created }}, {{ result.description }}</p>
             {% empty %}
                 <p>No se encontraron artículos.</p>
             {% endfor %}
