@@ -5,6 +5,10 @@
 
 {% block nombre_seccion %}Busquedas{% endblock %}
 
+{% block jquery %}
+	<script src="{% static 'js/refresher.js' %}"></script>
+{% endblock %}
+
 {% block contenido %}
 
 <section class="section-margin--small mb-5">
@@ -25,11 +29,26 @@
           <br>
             <h3>Resultados:</h3>
 
-            {% for result in page.object_list %}
-                <p>{{ result.title }}, {{ result.date_created }}, {{ result.description }}</p>
-            {% empty %}
-                <p>No se encontraron artículos.</p>
-            {% endfor %}
+            <div class="col-xl-9 col-lg-8 col-md-7">
+              <!-- Start Best Seller -->
+              <section class="lattest-product-area pb-40 category-list">
+              <div class="row" id="articles">
+              {% for result in page.object_list %}
+                  <div class="wrapper">                    
+                    <a href="/articulo/{{ result.pk }}">
+                      <img src="{{ result.image }}">
+                      <div class="content">
+                        <p>{{ result.title }}</p>
+                      </div>
+                    </a>
+                  </div>
+              {% empty %}
+                  <p>No se encontraron articulos.</p>
+              {% endfor %}
+              </div>            
+              </section>
+              <!-- End Best Seller -->
+              </div>
 
             {% if page.has_previous or page.has_next %}
                 <div>
