@@ -318,6 +318,8 @@ def ver_canje(request, id):
             canje.update(state=1)
         else:
             canje.update(state=2)
+            notif = Notification.objects.all().filter(pk=id)
+            notif.delete()
         return redirect('homepage')
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en especifico
