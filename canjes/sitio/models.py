@@ -112,6 +112,7 @@ class Chat(models.Model):
     participant1 = models.ForeignKey(User, related_name = 'participant1', blank = True, on_delete = models.CASCADE)
     participant2 = models.ForeignKey(User, related_name = 'participant2', blank = True, on_delete = models.CASCADE)
     messages = models.ManyToManyField(Message, blank = True)
+    timestamp2 = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return "{}".format(self.pk)

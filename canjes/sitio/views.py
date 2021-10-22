@@ -427,11 +427,11 @@ def robots_txt(request): #El robot.txt
     return render(request, "robots.txt", {})
 
 def chats(request):
-    chats = Chat.objects.all().filter(Q(participant1=request.user) | Q(participant2=request.user))
+    chats = Chat.objects.all().filter(Q(participant1=request.user) | Q(participant2=request.user)).order_by("-timestamp2")[:10]
     context = {}
     sender = []
     for chat in chats:
-        time = datetime.now()
+        time = chat.timestamp2
         user = None
         if request.user == chat.participant1:
             user = chat.participant2
