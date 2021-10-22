@@ -27,53 +27,37 @@
 					</div>
 
 					
-					<div class="col-md-12 form-group dropdown show">
-						<a class="btn btn-info dropdown-toggle button-login" role="button" id="dropdownMenuLinkName1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Categoría primaria
-						</a>
-					  
-						<div class="dropdown-menu" id="dropdownMenuLink1" aria-labelledby="dropdownMenuLink">
-						  <!--a class="dropdown-item">Action</a>
-						  <a class="dropdown-item">Another action</a>
-						  <a class="dropdown-item">Something else here</a-->
-						</div>
+					<div class="col-md-12 form-group">
+						<select class="form-select pt-2 pb-2 text-center" name="seleccion1" style="width: 100%; background-color: #007bff; color: white; font-weight: 600;"  id="dropdownMenuLink1" aria-label="Default select example" onchange="fill_sub_category(this.value)">
+						</select>
 					</div>
 
-					<div class="col-md-12 form-group dropdown show">
-						<a class="btn btn-info dropdown-toggle button-login" role="button" id="dropdownMenuLinkName2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						  Categoría secundaria
-						</a>
-					  
-						<div class="dropdown-menu" id="dropdownMenuLink2" aria-labelledby="dropdownMenuLink">
-							<!--a class="dropdown-item">Action</a>
-							<a class="dropdown-item">Another action</a>
-							<a class="dropdown-item">Something else here</a-->
-						</div>
+					<div class="col-md-12 form-group">
+						<select class="form-select pt-2 pb-2 text-center" name="category" style="width: 100%; background-color: #007bff; color: white; font-weight: 600;" id="dropdownMenuLink2" aria-label="Default select example">
+						</select>
 					</div>
 
 					<div class="col-md-12 form-group">
 						<textarea name="description" cols="40" rows="10" required="" class="form-control" placeholder="Descripcion" required id="id_description">{{article.description}}</textarea>
 					</div>
 					
-
 					<div class="col-md-12 form-group">
 						<label for="id_image_one">Imagen principal:</label>
-						<input type="file" value="{% if article.image_one %}{{article.image_one.url}}{% endif %}" name="image_one" accept="image/*" id="id_image_one">
+						<input type="file" name="image_one" accept="image/*" id="id_image_one">
 					</div>
 					<div class="col-md-12 form-group">
 						<label for="id_image_two">Imagenes secundarias:</label>
-						<input type="file" value="{% if article.image_two %}{{article.image_two.url}}{% endif %}" name="image_two" accept="image/*" id="id_image_two">
+						<input type="file" name="image_two" accept="image/*" id="id_image_two">
 					</div>
 					<div class="col-md-12 form-group">
-						<input type="file" value="{% if article.image_three %}{{article.image_three.url}}{% endif %}" name="image_three" accept="image/*" id="id_image_three">
+						<input type="file" name="image_three" accept="image/*" id="id_image_three">
 					</div>
 					<div class="col-md-12 form-group">
-						<input type="file" value="{% if article.image_four %}{{article.image_four.url}}{% endif %}" name="image_four" accept="image/*" id="id_image_four">
+						<input type="file" name="image_four" accept="image/*" id="id_image_four">
 					</div>
 					<div class="col-md-12 form-group">
-						<input type="file" value="{% if article.image_five %}{{article.image_five.url}}{% endif %}" name="image_five" accept="image/*" id="id_image_five">
-					</div>					
-					
+						<input type="file" name="image_five" accept="image/*" id="id_image_five">
+					</div>
 					
 					<div class="col-md-12 form-group">
 						<button type="submit" value="submit" class="button button-login w-100">Editar</button>
