@@ -23,7 +23,7 @@
 					{{form.as_p}}
 
 					<div class="col-md-12 form-group">
-						<input type="text" value="{{ article.title }}" class="form-control" name="title" autofocus autocapitalize="none" autocomplete="title" maxlength="150" placeholder="Tïtulo" required id="id_title">
+						<input type="text" value="{{ article.title }}" class="form-control" name="title" autofocus autocapitalize="none" autocomplete="title" maxlength="20" placeholder="Tïtulo" required id="id_title">
 					</div>
 
 					
@@ -38,7 +38,7 @@
 					</div>
 
 					<div class="col-md-12 form-group">
-						<textarea name="description" cols="40" rows="10" required="" class="form-control" placeholder="Descripcion" required id="id_description">{{article.description}}</textarea>
+						<textarea name="description" cols="40" rows="10" required="" class="form-control" placeholder="Descripcion" maxlength="300" required id="id_description">{{article.description}}</textarea>
 					</div>
 					
 					<div class="col-md-12 form-group">

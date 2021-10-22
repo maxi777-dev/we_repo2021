@@ -113,7 +113,8 @@ class FormLogin(AuthenticationForm):
         self.fields['password'].label = ''  
 
 class FormCreateArticle(ModelForm):
-    description = forms.CharField(widget=forms.Textarea)
+    description = forms.CharField(widget=forms.Textarea, max_length= 300)
+    title = forms.CharField(max_length=20)
     class Meta:
         model = Article
         fields = ['title', 'category', 'description', 'image_one', 'image_two', 'image_three', 'image_four', 'image_five']
