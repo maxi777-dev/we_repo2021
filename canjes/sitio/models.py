@@ -96,3 +96,22 @@ class Canje(models.Model):
     user_assignee = models.ForeignKey(User, null = True, default = None, on_delete = models.CASCADE, related_name='assignee')
     state = models.IntegerField(default = 0, null = False)
     notification = models.OneToOneField(Notification, null = True, default = None, on_delete = models.CASCADE)
+
+# -------- Chat ----------
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, related_name = 'messages', on_delete = models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add = True)
+    state = models.IntegerField(default = 0, null = False)
+
+    def __str__(self):
+        return self.sender.user.username
+
+class Chat(models.Model):
+    participant1 = models.ForeignKey(User, related_name = 'participant1', blank = True, on_delete = models.CASCADE)
+    participant2 = models.ForeignKey(User, related_name = 'participant2', blank = True, on_delete = models.CASCADE)
+    messages = models.ManyToManyField(Message, blank = True)
+
+    def __str__(self):
+        return "{}".format(self.pk)

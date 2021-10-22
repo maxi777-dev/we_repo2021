@@ -11,8 +11,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.views.generic import View
 from django.http import JsonResponse
-from datetime import date
+from datetime import date, datetime
 from haystack.generic_views import SearchView
+from django.db.models import Q
 
 ## TOKEN AUTH USER
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -316,11 +317,23 @@ def ver_canje(request, id):
 
         canje = Canje.objects.get(pk=id)
         Notification.objects.filter(pk=canje.notification.id).update(is_readed=True)
-        
-        canje = Canje.objects.all().filter(pk=id)
+
         if request.POST.get('acept_button'):
+            message = Message.objects.create(
+                sender = request.user,
+                content = "Hola! Acepte el canje!",
+                timestamp = datetime.now()
+            )
+            chat = Chat.objects.create(
+                participant1 = request.user,
+                participant2 = canje.user_creator,
+            )
+            chat.messages.set([message])
+            chat.save()
+            canje = Canje.objects.all().filter(pk=id)
             canje.update(state=1)
         else:
+            canje = Canje.objects.all().filter(pk=id)
             canje.update(state=2)
         return redirect('homepage')
 
@@ -412,3 +425,24 @@ class verificationview(View):
 
 def robots_txt(request): #El robot.txt
     return render(request, "robots.txt", {})
+
+def chats(request):
+    chats = Chat.objects.all().filter(Q(participant1=request.user) | Q(participant2=request.user))
+    context = {}
+    sender = []
+    for chat in chats:
+        time = datetime.now()
+        user = None
+        if request.user == chat.participant1:
+            user = chat.participant2
+        else:
+            user = chat.participant1
+        context = {
+            'time': time,
+            'user': user,
+        }
+        sender.append(context)
+    return render(request, "chat.html", {'context': sender})
+
+def chat(request):
+    return render(request, "chat.html", {})

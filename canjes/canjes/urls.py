@@ -48,6 +48,8 @@ urlpatterns = [
     path('notifications/', views.mis_notifications, name='mis_notifications'),
     path('robots.txt', views.robots_txt),
     path('search/', basic_search, name='search'),
+    path('chats/', views.chats, name='chats'),
+    path('chat/<id>', views.chat, name='chat'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
