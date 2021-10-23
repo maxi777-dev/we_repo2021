@@ -102,17 +102,19 @@ class Canje(models.Model):
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name = 'messages', on_delete = models.CASCADE)
     content = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add = True)
+    timestamp = models.DateTimeField(default=timezone.now)
     state = models.IntegerField(default = 0, null = False)
 
+    class Meta:
+        ordering = ['-timestamp']
+
     def __str__(self):
-        return self.sender.user.username
+        return self.sender.username
 
 class Chat(models.Model):
     participant1 = models.ForeignKey(User, related_name = 'participant1', blank = True, on_delete = models.CASCADE)
     participant2 = models.ForeignKey(User, related_name = 'participant2', blank = True, on_delete = models.CASCADE)
     messages = models.ManyToManyField(Message, blank = True)
-    timestamp2 = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return "{}".format(self.pk)

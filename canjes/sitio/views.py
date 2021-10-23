@@ -321,8 +321,7 @@ def ver_canje(request, id):
         if request.POST.get('acept_button'):
             message = Message.objects.create(
                 sender = request.user,
-                content = "Hola! Acepte el canje!",
-                timestamp = datetime.now()
+                content = "Hola! Acepte el canje!"
             )
             chat = Chat.objects.create(
                 participant1 = request.user,
@@ -332,10 +331,11 @@ def ver_canje(request, id):
             chat.save()
             canje = Canje.objects.all().filter(pk=id)
             canje.update(state=1)
+            return redirect('chats')
         else:
             canje = Canje.objects.all().filter(pk=id)
             canje.update(state=2)
-        return redirect('homepage')
+    return redirect('homepage')
 
 @login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en especifico
 def mis_canjes(request):
@@ -427,22 +427,51 @@ def robots_txt(request): #El robot.txt
     return render(request, "robots.txt", {})
 
 def chats(request):
-    chats = Chat.objects.all().filter(Q(participant1=request.user) | Q(participant2=request.user)).order_by("-timestamp2")[:10]
+    chats = Chat.objects.all().filter(Q(participant1=request.user) | Q(participant2=request.user)).order_by('-id')
     context = {}
     sender = []
+    flag = True
     for chat in chats:
-        time = chat.timestamp2
+        #time = chat.messages
+        if flag:
+            flag = False
+            first_messages = chat.messages.all()
+            first_chat_id = chat.id
+        all_messages = chat.messages.all()
+        last_message = all_messages.order_by('-timestamp')[0]
         user = None
         if request.user == chat.participant1:
             user = chat.participant2
         else:
             user = chat.participant1
         context = {
-            'time': time,
+            'time': last_message.timestamp,
             'user': user,
+            'content': last_message.content,
+            'chat_id': chat.id
         }
         sender.append(context)
-    return render(request, "chat.html", {'context': sender})
+    return render(request, "chat.html", {'context': sender, 'messages': first_messages, 'first_chat_id': first_chat_id})
 
-def chat(request):
-    return render(request, "chat.html", {})
+def chat(request, id):
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            all_messages = []
+            chats = Chat.objects.all().filter(Q(participant1=request.user) | Q(participant2=request.user))
+            chat_requested = Chat.objects.get(pk=id)
+            if chat_requested in chats:
+                all_messages = chat_requested.messages.all().order_by("-timestamp").values()
+            all_messages = list(all_messages)
+            return JsonResponse(all_messages, safe=False)
+        else:
+            chat = Chat.objects.get(pk=id)
+            print(chat.messages)
+            """ message = Message.objects.create(
+                sender = request.user,
+                content = request.POST.get('button-addon2')
+            )
+            messages = chat.messages
+            messages.append(message)
+            chat.messages.set(message)
+            chat.save()"""
+            return redirect('chats')
