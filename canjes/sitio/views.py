@@ -432,6 +432,8 @@ def chats(request):
     context = {}
     sender = []
     flag = True
+    first_messages = []
+    first_chat_id = []
     for chat in chats:
         if flag:
             flag = False

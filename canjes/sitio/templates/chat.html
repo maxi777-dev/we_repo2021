@@ -99,6 +99,8 @@ input::placeholder {
                 </div>
               </div>
             </a>
+            {% empty %}
+              <p>No hay chats aún</p>
             {% endfor %}
 
           </div>
@@ -131,6 +133,9 @@ input::placeholder {
               </div>
             </div>            
           {% endif %}
+
+        {% empty %}
+            <p>No hay mensajes aún</p>
         {% endfor %}
       </div>
       <!-- Typing area -->
