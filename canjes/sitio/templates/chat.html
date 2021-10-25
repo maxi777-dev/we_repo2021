@@ -110,6 +110,17 @@ input::placeholder {
       <div class="px-4 py-5 chat-box bg-white" id="conteiner_chat_messages">
         {% for message in messages %}
           {% if message.sender == user %}
+            
+            <!-- Reciever Message-->
+            <div class="media w-50 ml-auto mb-3">
+              <div class="media-body">
+                <div class="bg-primary rounded py-2 px-3 mb-2">
+                  <p class="text-small mb-0 text-white">{{message.content}}</p>
+                </div>
+                <p class="small text-muted">{{message.timestamp}}</p>
+              </div>
+            </div>
+          {% else %}
             <!-- Sender Message-->
             <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
               <div class="media-body ml-3">
@@ -118,18 +129,7 @@ input::placeholder {
                 </div>
                 <p class="small text-muted">{{message.timestamp}}</p>
               </div>
-            </div>
-          {% else %}
-          <!-- Reciever Message-->
-          <div class="media w-50 ml-auto mb-3">
-            <div class="media-body">
-              <div class="bg-primary rounded py-2 px-3 mb-2">
-                <p class="text-small mb-0 text-white">{{message.content}}</p>
-              </div>
-              <p class="small text-muted">{{message.timestamp}}</p>
-            </div>
-          </div>
-            
+            </div>            
           {% endif %}
         {% endfor %}
       </div>

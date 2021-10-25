@@ -426,16 +426,16 @@ class verificationview(View):
 def robots_txt(request): #El robot.txt
     return render(request, "robots.txt", {})
 
+@login_required(login_url='login') #Pide el logeo de un usuario para poder ingresar a una pagina en especifico
 def chats(request):
-    chats = Chat.objects.all().filter(Q(participant1=request.user) | Q(participant2=request.user)).order_by('-id')
+    chats = Chat.objects.all().filter(Q(participant1=request.user) | Q(participant2=request.user))
     context = {}
     sender = []
     flag = True
     for chat in chats:
-        #time = chat.messages
         if flag:
             flag = False
-            first_messages = chat.messages.all()
+            first_messages = chat.messages.all().order_by('timestamp')
             first_chat_id = chat.id
         all_messages = chat.messages.all()
         last_message = all_messages.order_by('-timestamp')[0]
@@ -460,18 +460,15 @@ def chat(request, id):
             chats = Chat.objects.all().filter(Q(participant1=request.user) | Q(participant2=request.user))
             chat_requested = Chat.objects.get(pk=id)
             if chat_requested in chats:
-                all_messages = chat_requested.messages.all().order_by("-timestamp").values()
+                all_messages = chat_requested.messages.all().order_by("timestamp").values()
             all_messages = list(all_messages)
             return JsonResponse(all_messages, safe=False)
         else:
             chat = Chat.objects.get(pk=id)
-            print(chat.messages)
-            """ message = Message.objects.create(
+            message = Message.objects.create(
                 sender = request.user,
                 content = request.POST.get('button-addon2')
             )
-            messages = chat.messages
-            messages.append(message)
-            chat.messages.set(message)
-            chat.save()"""
+            chat.messages.add(message)
+            chat.save()
             return redirect('chats')
