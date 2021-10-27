@@ -113,7 +113,7 @@ class FormLogin(AuthenticationForm):
         self.fields['password'].label = ''  
 
 class FormCreateArticle(ModelForm):
-    description = forms.CharField(widget=forms.Textarea, max_length= 300)
+    description = forms.CharField(widget=forms.Textarea, max_length= 250)
     title = forms.CharField(max_length=20)
     class Meta:
         model = Article

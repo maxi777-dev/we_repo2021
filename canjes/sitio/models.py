@@ -57,7 +57,7 @@ class Article(models.Model):
     category = models.ForeignKey(Category, null = True, default = None, on_delete = models.CASCADE)
     title = models.CharField(max_length = 255, null = False)
     date_created = models.DateTimeField(default=timezone.now)
-    description = models.CharField(max_length = 2055, null = False)
+    description = models.CharField(max_length = 250, null = False)
     state = models.IntegerField(default = 0, null = False)
     image_one = models.ImageField(upload_to = "articles/images/", null= True, blank = True)
     image_two = models.ImageField(upload_to = "articles/images/", null= True, blank = True)
