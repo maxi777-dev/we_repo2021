@@ -6,7 +6,7 @@
 {% block nombre_seccion %}Carga un artículo{% endblock %}
 
 {% block jquery %}
-	<script src="{% static 'js/categories.js' %}"></script>
+	<script src="{% static 'js/edit_categories.js' %}"></script>
 {% endblock %}
 
 {% block contenido %}
@@ -29,11 +29,25 @@
 					
 					<div class="col-md-12 form-group">
 						<select class="form-select pt-2 pb-2 text-center" name="seleccion1" style="width: 100%; background-color: #007bff; color: white; font-weight: 600;"  id="dropdownMenuLink1" aria-label="Default select example" onchange="fill_sub_category(this.value)">
+							{% for category in parent_categories %}
+								{% if category.id == article.category.parent.id %}
+									<option id="item-dropdown`+ text.id +`" value="{{ category.id }}" selected>{{ category.title }}</option>
+								{% else %}
+									<option id="item-dropdown`+ text.id +`" value="{{ category.id }}">{{ category.title }}</option>
+								{% endif %}
+							{% endfor %}
 						</select>
 					</div>
 
 					<div class="col-md-12 form-group">
 						<select class="form-select pt-2 pb-2 text-center" name="category" style="width: 100%; background-color: #007bff; color: white; font-weight: 600;" id="dropdownMenuLink2" aria-label="Default select example">
+							{% for category in child_categories %}
+								{% if category.id == article.category.id %}
+									<option id="item-dropdown2" value="{{ category.id }}" selected>{{ category.title }}</option>
+								{% else %}
+									<option id="item-dropdown2" value="{{ category.id }}">{{ category.title }}</option>
+								{% endif %}
+							{% endfor %}
 						</select>
 					</div>
 
@@ -43,19 +57,34 @@
 					
 					<div class="col-md-12 form-group">
 						<label for="id_image_one">Imagen principal:</label>
+						{% if article.image_one.url %}
+							<a href="{{ article.image_one.url }}" target="_blank">{{ article.image_one.url }}</a>
+						{% endif %}
 						<input type="file" name="image_one" accept="image/*" id="id_image_one">
 					</div>
 					<div class="col-md-12 form-group">
 						<label for="id_image_two">Imagenes secundarias:</label>
+						{% if article.image_two %}
+							<a href="{{ article.image_two.url }}" target="_blank">{{ article.image_two.url }}</a>
+						{% endif %}
 						<input type="file" name="image_two" accept="image/*" id="id_image_two">
 					</div>
 					<div class="col-md-12 form-group">
+						{% if article.image_three %}
+							<a href="{{ article.image_three.url }}" target="_blank">{{ article.image_three.url }}</a>
+						{% endif %}
 						<input type="file" name="image_three" accept="image/*" id="id_image_three">
 					</div>
 					<div class="col-md-12 form-group">
+						{% if article.image_four %}
+							<a href="{{ article.image_four.url }}" target="_blank">{{ article.image_four.url }}</a>
+						{% endif %}
 						<input type="file" name="image_four" accept="image/*" id="id_image_four">
 					</div>
 					<div class="col-md-12 form-group">
+						{% if article.image_five %}
+							<a href="{{ article.image_five.url }}" target="_blank">{{ article.image_five.url }}</a>
+						{% endif %}
 						<input type="file" name="image_five" accept="image/*" id="id_image_five">
 					</div>
 					

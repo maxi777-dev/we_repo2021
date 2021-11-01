@@ -115,6 +115,7 @@ class FormLogin(AuthenticationForm):
 class FormCreateArticle(ModelForm):
     description = forms.CharField(widget=forms.Textarea, max_length= 250)
     title = forms.CharField(max_length=20)
+    
     class Meta:
         model = Article
         fields = ['title', 'category', 'description', 'image_one', 'image_two', 'image_three', 'image_four', 'image_five']

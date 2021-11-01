@@ -160,12 +160,14 @@ def mis_articulos(request):
 @login_required(login_url='login')
 def edit_article(request, id):
     article = get_object_or_404(Article, id=id)
-    form = FormCreateArticle(request.POST or None, instance=article)
+    form = FormCreateArticle(request.POST, request.FILES or None, instance=article)
+    parent_categories = Category.objects.filter(parent=None).values()
+    child_categories = Category.objects.filter(parent=article.category.parent).values()
     if request.user == article.user:
         if form.is_valid():
             form.save()
             return redirect('mis_articulos')
-        return render(request, 'edit_articulo.html', {'article': article})
+        return render(request, 'edit_articulo.html', {'article': article, 'parent_categories': parent_categories, 'child_categories': child_categories})
     else:
         return redirect('homepage')
 
