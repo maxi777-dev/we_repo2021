@@ -59,7 +59,7 @@ class Article(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
     description = models.CharField(max_length = 250, null = False)
     state = models.IntegerField(default = 0, null = False)
-    image_one = models.ImageField(upload_to = "articles/images/", null= True, blank = True)
+    image_one = models.ImageField(upload_to = "articles/images/", null= True, blank = True, default='articles/images/logo.png')
     image_two = models.ImageField(upload_to = "articles/images/", null= True, blank = True)
     image_three = models.ImageField(upload_to = "articles/images/", null= True, blank = True)
     image_four = models.ImageField(upload_to = "articles/images/", null= True, blank = True)
